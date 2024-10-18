@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Montserrat", 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --dns-color: #FE7C00;
+    --neutral-color: #a0a0a4;
+    --industrial-color: #333333;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+}
+
+header {
+    margin-top: 4px;
+    display: grid;
+    height: 100px;
+    grid-template-columns: 1fr 2fr;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--industrial-color);
+    border-radius: 16px;
+    box-shadow: 6px 4px 4px var(--industrial-color);
+}
+
+nav ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    list-style: none;
+    font-size: 1.4em;
+    color: var(--dns-color);
+    font-weight: 600;
+}
+
+.header-logo {
+    height: inherit;
+    background: url(./img/DNS_LOGO.png);
+    background-size: auto 100px;
+    background-repeat: no-repeat;
+}
+
+main {
+    margin-top: 4%;
+    padding-bottom: 30px;
+}
+
+.main-title {
+    text-align: center;
+}
+
+.main-content h1 {
+    font-size: 3.5em;
+}
+
+.main-content h2 {
+    font-size: 3em;
+    text-align: center;
+}
+
+.main-content-grid {
+    display: grid;
+    margin-top: 4%;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 1fr 1fr;
+}
+
+.main-brand-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.66em;
+}
+
+.main-brand-element {
+    display: flex;
+    align-items: center;
+    width: 120px;
+    height: 60px;
+    margin-bottom: 8px;
+    padding: 4px;
+    border-radius: 12px;
+    border: solid #333333 2px;
+}
+
+.main-brand-element img {
+    display: block;
+    margin: auto;
+}
+
+.main-go-purchasing {
+    margin-top: 3%;
+    text-align: center;
+}
+
+.main-go-purchasing button {
+    padding: 8px;
+    font-size: 2em;
+    border-radius: 16px;
+    border: none;
+    transition: background-color 0.5s;
+}
+
+.main-go-purchasing button:hover {
+    background-color: var(--dns-color);
+    transition: background-color 0.5s;
+}
+
+footer {
+    position: absolute;
+    width: 80%;
+    left: 50;
+    bottom: 0;
+    height: 20px;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--dns-color);
+    margin-bottom: 12px;
+    padding: 16px;
+    background-color: var(--industrial-color);
+    border-radius: 16px;
+    box-shadow: 6px 4px 4px var(--industrial-color);
+}
