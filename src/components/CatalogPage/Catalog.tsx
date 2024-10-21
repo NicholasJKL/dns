@@ -39,6 +39,14 @@ const Catalog: FC = () => {
                 <CatalogElement></CatalogElement>
                 <CatalogElement></CatalogElement>
                 <CatalogElement></CatalogElement>
+                <CatalogElement></CatalogElement>
+                <CatalogElement></CatalogElement>
+            </div>
+
+            <div className='catalog-pagination'>
+                <button className='catalog-pagination-left'></button>
+                <div className='catalog-pagination-current'><p>1</p></div>
+                <button className='catalog-pagination-right'></button>
             </div>
         </div>
     );

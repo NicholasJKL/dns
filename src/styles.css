@@ -11,7 +11,6 @@
     --neutral-color: #f5f5f5;
     --white-color: white;
     --industrial-color: #333333;
-
 }
 
 body {
@@ -151,14 +150,15 @@ input[type="search"]::-webkit-search-cancel-button {
 .catalog-content {
     display: grid;
     justify-items: center;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1em 2em;
 }
 
 .catalog-element {
     display: grid;
     width: 170px;
     height: 220px;
-    margin-bottom: 1em;
     text-align: center;
     grid-template-rows: 2fr 1fr;
     padding: 4px 2px 4px 2px;
@@ -233,6 +233,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .catalog-search input {
     height: 3em;
+    font-size: 1em;
     flex-grow: 2;
     border-radius: 8px;
     border: 0;
@@ -245,10 +246,11 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .catalog-search-button,
 .catalog-clear-button {
-    border: 0;
-    background: 0;
     width: 36px;
     height: 36px;
+    margin-right: 4px;
+    border: 0;
+    background: 0;
     background-size: 36px;
     background-repeat: no-repeat;
 }
@@ -271,6 +273,59 @@ input[type="search"]::-webkit-search-cancel-button {
 .catalog-clear-button:hover {
     background-image: url(img/close_dns.png);
     transition: background-image 0.4s;
+}
+
+.catalog-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+
+}
+
+.catalog-pagination-left,
+.catalog-pagination-right {
+    width: 48px;
+    height: 48px;
+    border: 0;
+    border-radius: 8px;
+    background-size: 36px;
+    background-repeat: no-repeat;
+    background-color: var(--white-color);
+    background-position: center;
+}
+
+.catalog-pagination-left {
+    background-image: url(img/arrow_left.png);
+    transition: background-image 0.4s;
+}
+
+.catalog-pagination-right {
+    background-image: url(img/arrow_right.png);
+    transition: background-image 0.4s;
+}
+
+.catalog-pagination-left:hover {
+    background-image: url(img/arrow_left_dns.png);
+    transition: background-image 0.4s;
+}
+
+.catalog-pagination-right:hover {
+    background-image: url(img/arrow_right_dns.png);
+    transition: background-image 0.4s;
+}
+
+.catalog-pagination-current {
+    font-size: 1.2em;
+}
+
+.contacts-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    font-size: 1.2em;
 }
 
 footer {

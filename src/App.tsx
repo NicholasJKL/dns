@@ -5,6 +5,7 @@ import Header from './components/Common/Header';
 import Main from './components/MainPage/Main';
 import About from './components/AboutPage/About'
 import Catalog from './components/CatalogPage/Catalog'
+import Contacts from './components/ContactsPage/Contacts';
 import Footer from './components/Common/Footer';
 
 
@@ -17,7 +18,7 @@ function App() {
           <Route path='/' element={<Main />}></Route>
           <Route path='/about' element={<About />}></Route>
           <Route path='/catalog' element={<Catalog />}></Route>
-          <Route path='/contacts' element={<Main />}></Route>
+          <Route path='/contacts' element={<Contacts />}></Route>
           <Route path='/auth' element={<Main />}></Route>
           <Route path='/registration' element={<Main />}></Route>
         </Routes>
