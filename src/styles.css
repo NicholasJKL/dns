@@ -255,12 +255,23 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .catalog-search-button {
     background-image: url(img/search.png);
+    transition: background-image 0.4s;
 }
 
 .catalog-clear-button {
     background-image: url(img/close.png);
+    transition: background-image 0.4s;
 }
 
+.catalog-search-button:hover {
+    background-image: url(img/search_dns.png);
+    transition: background-image 0.4s;
+}
+
+.catalog-clear-button:hover {
+    background-image: url(img/close_dns.png);
+    transition: background-image 0.4s;
+}
 
 footer {
     height: 20px;
