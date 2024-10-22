@@ -2,7 +2,8 @@ import React, { FC } from 'react';
 
 import MainBrandElement from './MainBrandElement';
 
-import '../../styles.css';
+import '../../styles/common_styles.css';
+import '../../styles/main_styles.css';
 
 const Main: FC = () => {
     return (

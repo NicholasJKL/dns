@@ -2,7 +2,9 @@ import React, { FC, useState, useRef, ChangeEvent, MouseEvent, RefObject } from 
 
 import CatalogElement from './CatalogElement';
 
-import '../../styles.css';
+import '../../styles/common_styles.css';
+import '../../styles/catalog_styles.css';
+
 
 const Catalog: FC = () => {
 

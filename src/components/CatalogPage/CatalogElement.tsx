@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 
-import '../../styles.css';
+import '../../styles/common_styles.css';
+import '../../styles/catalog_styles.css';
+
 
 const CatalogElement: FC = () => {
     return (

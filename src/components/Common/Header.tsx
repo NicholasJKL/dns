@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import '../../styles.css';
+import '../../styles/common_styles.css';
 
 const Header: FC = () => {
   return (
@@ -16,7 +16,6 @@ const Header: FC = () => {
           <NavLink to='/contacts' className={({ isActive }) => isActive ? 'link link-active' : 'link'}><li>Контакты</li></NavLink>
           <NavLink to='/auth' className={({ isActive }) => isActive ? 'link link-active' : 'link'}><li>Вход</li></NavLink>
           <NavLink to='/registration' className={({ isActive }) => isActive ? 'link link-active' : 'link'}><li>Регистрация</li></NavLink>
-
         </ul>
       </nav>
     </header>

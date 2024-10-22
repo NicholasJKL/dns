@@ -1,0 +1,14 @@
+.about-content {
+    font-size: 1.2em;
+    text-indent: 1.2em;
+    line-height: 1.5em;
+}
+
+.about-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.about-grid-block {
+    padding: 0 16px 8px 16px;
+}

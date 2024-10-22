@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 
 
-import '../../styles.css';
+import '../../styles/common_styles.css';
+import '../../styles/contacts_styles.css';
 
 const Contacts: FC = () => {
     return (
