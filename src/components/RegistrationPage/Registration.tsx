@@ -20,7 +20,7 @@ const Registration: FC = () => {
     }
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        if (password == passwordRepeat) {
+        if (password === passwordRepeat) {
             alert('Успешная регистрация');
         } 
         else {

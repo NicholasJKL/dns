@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef, ChangeEvent, MouseEvent, RefObject } from 'react';
+import React, { FC, useState, useRef, ChangeEvent, MouseEvent } from 'react';
 
 import CatalogElement from './CatalogElement';
 
