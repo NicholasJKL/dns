@@ -17,6 +17,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 80%;
+    min-width: 1200px;
     margin: auto;
     background-color: var(--neutral-color);
 }
@@ -68,6 +69,7 @@ main {
 input[type="search"]::-webkit-search-cancel-button {
     -webkit-appearance: none;
 }
+
 footer {
     height: 20px;
     text-align: center;

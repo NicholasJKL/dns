@@ -8,7 +8,8 @@ const Auth: FC = () => {
   return (
     <div>
       <form className='auth-reg-form' onSubmit={() => alert('Успешный вход')}>
-        <input name='login' type='email' placeholder='Логин' required  />
+        <p><b>Вход</b></p>
+        <input name='login' type='email' placeholder='Логин (почта)' required  />
         <input name='password' type="password" placeholder='Пароль' required  />
         <button type='submit'>Войти</button>
       </form>

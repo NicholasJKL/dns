@@ -1,13 +1,16 @@
 .auth-reg-form {
     display: flex;
     flex-direction: column;
-    align-items: end;
     margin: auto;
-    gap: 16px;
+    gap: 24px;
     width: fit-content;
     padding: 36px;
     border-radius: 8px;
     background-color: var(--white-color);
+}
+
+.auth-reg-form p {
+    font-size: 1.4em;
 }
 
 .auth-reg-form input {
@@ -23,6 +26,7 @@
 .auth-reg-form button {
     width: fit-content;
     font-size: 1.2em;
+    align-self: flex-end;
     padding: 8px;
     border: 0;
     border-radius: 8px;

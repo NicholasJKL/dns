@@ -49,9 +49,9 @@
 }
 
 .main-go-purchasing button {
-    padding: 8px;
-    font-size: 2em;
-    border-radius: 16px;
+    padding: 12px;
+    font-size: 1.8em;
+    border-radius: 8px;
     border: none;
     transition: background-color 0.5s;
 }

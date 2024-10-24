@@ -9,6 +9,7 @@ import Contacts from './components/ContactsPage/Contacts';
 import Auth from './components/AuthPage/Auth';
 import Footer from './components/Common/Footer';
 import Registration from './components/RegistrationPage/Registration';
+import Item from './components/ItemPage/Item';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path='/contacts' element={<Contacts />}></Route>
           <Route path='/auth' element={<Auth />}></Route>
           <Route path='/registration' element={<Registration />}></Route>
+          <Route path='/item' element={<Item />}></Route>
         </Routes>
       </main>
       <Footer></Footer>

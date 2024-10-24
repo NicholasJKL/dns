@@ -6,8 +6,7 @@ import '../../styles/common_styles.css';
 const Header: FC = () => {
   return (
     <header>
-      <div className='header-logo'>
-      </div>
+      <NavLink to='/' className='header-logo'></NavLink>
       <nav>
         <ul>
           <NavLink to='/' className={({ isActive }) => isActive ? 'link link-active' : 'link'}><li>Главная</li></NavLink>

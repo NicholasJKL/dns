@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import MainBrandElement from './MainBrandElement';
 
@@ -6,6 +7,13 @@ import '../../styles/common_styles.css';
 import '../../styles/main_styles.css';
 
 const Main: FC = () => {
+    
+    const navigation = useNavigate();
+
+    const handleClick = () => {
+        navigation('/catalog');
+    }
+
     return (
         <div>
             <div className='main-content'>
@@ -34,7 +42,7 @@ const Main: FC = () => {
                     </div>
                 </div>
                 <div className='main-go-purchasing'>
-                    <button>Перейти к каталогу товаров</button>
+                    <button onClick={handleClick}>Перейти к каталогу товаров</button>
                 </div>
             </div>
         </div>
