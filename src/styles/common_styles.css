@@ -92,15 +92,16 @@ footer {
     }
     .header-logo {
         min-width: 320px;
-        min-height: 100px;
+        min-height: 80px;
+        justify-self: left;
     }
 
     nav ul {
         display: flex;
         flex-direction: column;
-        padding: 8px;
-        gap: 24px;
-        align-items: flex-end;
+        padding: 12px;
+        gap: 16px;
+        align-items: flex-start;
         
     }
 

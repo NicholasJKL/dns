@@ -39,3 +39,10 @@
     background-color: var(--dns-color);
     transition: background-color 0.4s;
 }
+
+@media (max-width:1023px) {
+    .auth-reg-form input {
+        width: 240px;
+        font-size: 16px;
+    }
+}
