@@ -2,17 +2,31 @@ import React, { FC } from 'react';
 
 import '../../styles/common_styles.css';
 import '../../styles/item_styles.css';
+import { useLocation } from 'react-router-dom';
 
-const Item: FC = () => {
+interface ItemProperty {
+    item_name: string,
+    item_price: string,
+    image_path: string
+}
+
+const Item: FC<ItemProperty> = ({ item_name, item_price, image_path }) => {
+
+    const { state } = useLocation();
+
+    item_name = state.item_name;
+    item_price = state.item_price;
+    image_path = state.image_path;
+
     return (
         <div className='item-grid'>
             <div className='item-left-content'>
-                <img src={require('../../img/iphone6-item.jpg')} alt="Картинка" />
+                <img src={image_path} alt="Картинка" />
             </div>
             <div className='item-right-content'>
-                <h2>Название товара</h2>
+                <h2>{item_name}</h2>
                 <div className='item-buy-price'>
-                    <p>400 ₽</p>
+                    <p>{item_price} ₽</p>
                     <button>Купить</button>
                 </div>
                 <h2>Описание:</h2>

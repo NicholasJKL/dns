@@ -24,7 +24,7 @@ function App() {
           <Route path='/contacts' element={<Contacts />}></Route>
           <Route path='/auth' element={<Auth />}></Route>
           <Route path='/registration' element={<Registration />}></Route>
-          <Route path='/item' element={<Item />}></Route>
+          <Route path='/item' element={<Item item_name='Название товара' item_price='Цена' image_path='' />}></Route>
         </Routes>
       </main>
       <Footer></Footer>

@@ -47,7 +47,7 @@ nav ul {
 
 .header-logo {
     height: inherit;
-    background: url(../img/DNS_LOGO.png);
+    background: url(../../public/img/DNS_LOGO.png);
     background-size: auto 100px;
     background-repeat: no-repeat;
 }

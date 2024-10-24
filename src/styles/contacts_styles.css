@@ -6,3 +6,8 @@
     gap: 1em;
     font-size: 1.2em;
 }
+
+.dns-map {
+    width: 70vw;
+    height: 66vh;
+}

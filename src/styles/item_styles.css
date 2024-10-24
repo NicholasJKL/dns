@@ -9,8 +9,14 @@
     background-color: var(--white-color);
 }
 
+.item-left-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .item-left-content img{
-    height: 560px;
+    max-width: 100%;
 }
 
 .item-right-content {
