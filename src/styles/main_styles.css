@@ -53,6 +53,7 @@
     font-size: 1.8em;
     border-radius: 8px;
     border: none;
+    background-color: var(--neutral-color);
     transition: background-color 0.5s;
 }
 
