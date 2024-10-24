@@ -65,4 +65,7 @@
     .item-grid {
         grid-template-columns: 1fr;
     }
+    .item-buy-price {
+        justify-content: space-around;
+    }
 }

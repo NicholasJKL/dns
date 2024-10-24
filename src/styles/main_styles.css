@@ -4,11 +4,7 @@
 
 .main-content h1 {
     font-size: 3.5em;
-}
-
-.main-content h2 {
-    font-size: 3em;
-    text-align: center;
+    
 }
 
 .main-content-grid {
@@ -17,6 +13,11 @@
     justify-content: center;
     align-items: center;
     grid-template-columns: 1fr 1fr;
+}
+
+.main-content-text {
+    font-size: 3em;
+    text-align: center;
 }
 
 .main-brand-grid {

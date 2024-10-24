@@ -18,11 +18,11 @@ const Main: FC = () => {
         <div>
             <div className='main-content'>
                 <div className='main-title'>
-                    <h1>Интернет-магазин цифровой и бытовой техники.</h1>
+                    <h1>Интернет-магазин цифровой и бытовой техники</h1>
                 </div>
                 <div className='main-content-grid'>
-                    <div>
-                        <h2>Наши партнёры:</h2>
+                    <div className='main-content-text'>
+                        <p>Наши партнёры:</p>
                     </div>
                     <div>
                         <div className='main-brand-grid'>
