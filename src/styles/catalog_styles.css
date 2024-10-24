@@ -149,7 +149,7 @@
 
 .catalog-pagination {
     display: flex;
-    margin-top: 4px;
+    margin-top: 12px;
     justify-content: center;
     align-items: center;
     gap: 2em;
@@ -190,4 +190,20 @@
 
 .catalog-pagination-current {
     font-size: 1.2em;
+}
+
+@media (max-width:1440px) and (min-width:1024px) {
+    .catalog-content {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+
+@media (max-width:1023px) {
+    .catalog-content {
+        grid-template-columns: 1fr;
+    }
+    .catalog-search {
+        min-width: 320px;
+    }
 }

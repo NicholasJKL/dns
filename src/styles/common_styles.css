@@ -17,7 +17,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 80%;
-    min-width: 1200px;
+    min-width: 1024px;
     margin: auto;
     background-color: var(--neutral-color);
 }
@@ -81,5 +81,31 @@ footer {
     background-color: var(--industrial-color);
     border-radius: 16px;
     box-shadow: 6px 4px 4px var(--industrial-color);
+}
+
+@media (max-width:1023px) {
+    header {
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+        justify-content: space-between;
+    }
+    .header-logo {
+        min-width: 320px;
+        min-height: 100px;
+    }
+
+    nav ul {
+        display: flex;
+        flex-direction: column;
+        padding: 8px;
+        gap: 24px;
+        align-items: flex-end;
+        
+    }
+
+    body {
+        min-width: 320px;
+    }
 }
 

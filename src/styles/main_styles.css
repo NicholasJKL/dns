@@ -54,7 +54,7 @@
     font-size: 1.8em;
     border-radius: 8px;
     border: none;
-    color:var(--industrial-color);
+    color: var(--industrial-color);
     background-color: var(--white-color);
     transition: background-color 0.4s;
 }
@@ -62,4 +62,16 @@
 .main-go-purchasing button:hover {
     background-color: var(--dns-color);
     transition: background-color 0.4s;
+}
+
+@media (max-width:1023px) {
+    .main-content-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .main-brand-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
 }
