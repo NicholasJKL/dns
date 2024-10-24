@@ -9,5 +9,7 @@
 
 .dns-map {
     width: 70vw;
+    min-width: 800px;
+    min-height: 500px;
     height: 66vh;
 }

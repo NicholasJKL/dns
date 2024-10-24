@@ -34,6 +34,7 @@
     height: 60px;
     margin: 0 4px 8px 4px;
     padding: 4px;
+    background-color: var(--white-color);
     border-radius: 12px;
     border: solid #333333 2px;
 }
@@ -53,11 +54,12 @@
     font-size: 1.8em;
     border-radius: 8px;
     border: none;
-    background-color: var(--neutral-color);
-    transition: background-color 0.5s;
+    color:var(--industrial-color);
+    background-color: var(--white-color);
+    transition: background-color 0.4s;
 }
 
 .main-go-purchasing button:hover {
     background-color: var(--dns-color);
-    transition: background-color 0.5s;
+    transition: background-color 0.4s;
 }

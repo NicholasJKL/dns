@@ -36,6 +36,6 @@
 }
 
 .auth-reg-form button:hover {
-    background-color:var(--dns-color);
+    background-color: var(--dns-color);
     transition: background-color 0.4s;
 }
