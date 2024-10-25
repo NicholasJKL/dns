@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef, ChangeEvent, MouseEvent, useEffect } from 'react';
+import React, { FC, useState, useRef, useEffect, ChangeEvent, MouseEvent, FormEvent } from 'react';
 
 import CatalogElement from './CatalogElement';
 import Item from '../../models/Item';
@@ -9,10 +9,13 @@ import '../../styles/catalog_styles.css';
 
 const Catalog: FC = () => {
 
-    const [isActive, setActive] = useState<boolean>(false);
     const [items, setItems] = useState<Item[]>([]);
+    const [isActive, setActive] = useState<boolean>(false);
+    const [isSearching, setIsSearching] = useState<boolean>(false);
     const [searchValue, setSearchValue] = useState<string>('');
+    const [searched, setSearched] = useState<string>('');
     const search = useRef<HTMLFormElement>(null);
+    
 
     useEffect(() => {
         setItems([
@@ -30,8 +33,10 @@ const Catalog: FC = () => {
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
+
+        setSearchValue(value);
+
         if (value) {
-            setSearchValue(value);
             setActive(true);
         }
         else {
@@ -39,24 +44,37 @@ const Catalog: FC = () => {
         }
     }
 
-    const handleClear = (e: MouseEvent<HTMLElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setSearched(searchValue);
+
+        if (searchValue.length === 0) {
+            setIsSearching(false);
+        }
+        else {
+            setIsSearching(true);
+        }
+
+    }
+
+    const handleClear = (e: MouseEvent<HTMLElement>) => {
         search.current?.reset();
         setActive(false);
+        setSearchValue('');
     }
 
     return (
         <div>
-            <form className='catalog-search' ref={search}>
+            <form className='catalog-search' onSubmit={handleSubmit} ref={search}>
                 <input type="search" placeholder='Поиск' maxLength={64} onChange={handleInput} />
-                <button type='reset' className={isActive ? 'catalog-clear-button' : 'catalog-clear-button hidden'} onClick={handleClear}></button>
-                <button className='catalog-search-button'></button>
+                <button type='submit' className={isActive ? 'catalog-clear-button' : 'catalog-clear-button hidden'} onClick={handleClear}></button>
+                <button type='submit' className='catalog-search-button'></button>
             </form>
 
-            {(isActive) ?
+            {(isSearching) ?
                 <div className='search-result'>
                     <p><b>Результаты поиска</b><br></br>
-                        Вы искали: {searchValue}</p>
+                        Вы искали: {searched}</p>
                 </div>
                 :
                 <div className='catalog-content'>
