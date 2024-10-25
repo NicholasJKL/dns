@@ -7,7 +7,7 @@ import '../../styles/about_styles.css';
 const About: FC = () => {
     return (
         <div className='about-content'>
-            <p><b>DNS – один из лидеров рынка по продаже цифровой и бытовой техники в России</b></p><br />
+            <p><b>DNS – один из лидеров рынка по продаже цифровой и бытовой техники в России.</b></p><br />
             <p>Наша цель изменить жизнь людей, сделав простым доступ к огромному количеству качественных и недорогих товаров, предоставляя лучший сервис.</p><br />
             <div className='about-content-grid'>
                 <div className='about-grid-block'>
@@ -35,6 +35,37 @@ const About: FC = () => {
                     <p> Ценим свободу, смелость и ответственность.</p>
                 </div>
             </div>
+            <form className='about-feedback'>
+                <h2>Обратная связь</h2>
+                <label>Имя</label>
+                <input maxLength={32} type="text" required />
+                <label>Почта</label>
+                <input type="text" />
+                <label>Телефон</label>
+                <input type="tel" />
+                <label>Раздел</label>
+                <select autoComplete='on' required>
+                    <option>Товары</option>
+                    <option>Заказ</option>
+                    <option>Сервисный центр</option>
+                    <option>Техническое сопровождение товара</option>
+                    <option>Бонусы, подарочные карты, сертификаты</option>
+                    <option>Коммерческое предложение</option>
+                    <option>Трудоустройство в компании</option>
+                    <option>Нарушение авторских или смежных прав</option>
+                    <option>Другое</option>
+                </select>
+                <label>Вид сообщения</label>
+                <p>&nbsp;<input name='topic' type="radio" required/>&nbsp;Отзыв</p>
+                <p>&nbsp;<input name='topic' type="radio" required/>&nbsp;Рекламация или жалоба</p>
+                <p>&nbsp;<input name='topic' type="radio" required/>&nbsp;Коммерческое предложение</p>
+                <label>Поддержание связи</label>
+                <p>&nbsp;<input type="checkbox" />&nbsp;Почта</p>
+                <p>&nbsp;<input type="checkbox" />&nbsp;Телефон</p>
+                <label>Текст сообщения</label>
+                <textarea maxLength={1024} required></textarea>
+                <button type='submit'>Отправить</button>
+            </form>
         </div>
     );
 };

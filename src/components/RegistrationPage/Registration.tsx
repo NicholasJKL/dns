@@ -31,10 +31,13 @@ const Registration: FC = () => {
     return (
         <div>
             <form className='auth-reg-form' onSubmit={handleSubmit}>
-                <p><b>Регистрация</b></p>
-                <input name='login' type="text" placeholder='Введите почту' required  />
-                <input name='password' type="password" placeholder='Придумайте пароль' minLength={8} required  onChange={handlePasswordChange} />
-                <input name='password_repeat' type="password" placeholder='Повторите пароль' minLength={8} required  onChange={handlePasswordRepeatChange} />
+                <h2>Регистрация</h2>
+                <label>Почта (email)</label>
+                <input name='login' type="text" required  />
+                <label>Пароль (минимум 8 символов)</label>
+                <input name='password' type="password" minLength={8} maxLength={24} required  onChange={handlePasswordChange} />
+                <label>Повторите пароль</label>
+                <input name='password_repeat' type="password" minLength={8} maxLength={24} required  onChange={handlePasswordRepeatChange} />
                 <button type='submit'>Зарегистрироваться</button>
             </form>
         </div>

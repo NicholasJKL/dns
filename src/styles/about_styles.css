@@ -1,20 +1,66 @@
 .about-content {
     font-size: 1.2em;
-    text-indent: 1.2em;
+    text-indent: 1em;
     line-height: 1.5em;
 }
 
 .about-content-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
 }
 
 .about-grid-block {
     padding: 0 16px 8px 16px;
 }
 
+.about-feedback {
+    display: flex;
+    flex-direction: column;
+    margin: 36px auto 0 auto;
+    padding: 24px;
+    width: 50%;
+    min-width: 320px;
+    border-radius: 8px;
+    background-color: var(--white-color);
+}
+
+.about-feedback input,
+select,
+textarea {
+    margin-bottom: 16px;
+    font-size: 1em;
+    outline: 0;
+    padding: 8px;
+    border: 0;
+    border-radius: 4px;
+    background-color: var(--neutral-color);
+}
+
+.about-feedback h2 {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.about-feedback p {
+    font-size: 16px;
+}
+
+.about-feedback button {
+    align-self: flex-end;
+}
+
+.about-feedback textarea {
+    min-width: 90%;
+    min-height: 4em;
+    overflow-y: scroll;
+    resize: none;
+    border-radius: 8px;
+}
+
 @media (max-width:1023px) {
     .about-content-grid {
         grid-template-columns: 1fr;
+        gap: 24px;
     }
 }
