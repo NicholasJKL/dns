@@ -123,6 +123,7 @@
     margin-right: 4px;
     border: 0;
     background: 0;
+    background-color: 0;
     background-size: 36px;
     background-repeat: no-repeat;
 }
@@ -138,11 +139,13 @@
 }
 
 .catalog-search-button:hover {
+    background-color: transparent;
     background-image: url(../../public/img/search_dns.png);
     transition: background-image 0.4s;
 }
 
 .catalog-clear-button:hover {
+    background-color: transparent;
     background-image: url(../../public/img/close_dns.png);
     transition: background-image 0.4s;
 }
@@ -192,6 +195,15 @@
     font-size: 1.2em;
 }
 
+.search-result {
+    width: 100%;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 1.2em;
+    line-height: 2em;
+    background-color: var(--white-color);
+}
+
 @media (max-width:1440px) and (min-width:1024px) {
     .catalog-content {
         grid-template-columns: repeat(4, 1fr);
@@ -204,6 +216,7 @@
         grid-template-columns: 1fr 1fr;
         gap: 24px 4px;
     }
+
     .catalog-search {
         min-width: 320px;
     }
