@@ -40,7 +40,7 @@ const About: FC = () => {
                 <label>Имя</label>
                 <input maxLength={32} type="text" required />
                 <label>Почта</label>
-                <input type="text" />
+                <input type="email" />
                 <label>Телефон</label>
                 <input type="tel" />
                 <label>Раздел</label>

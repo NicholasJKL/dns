@@ -58,6 +58,10 @@ textarea {
     border-radius: 8px;
 }
 
+.about-feedback input[type=radio],input[type=checkbox] {
+    transform: scale(1.2);
+}
+
 @media (max-width:1023px) {
     .about-content-grid {
         grid-template-columns: 1fr;

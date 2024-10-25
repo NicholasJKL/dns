@@ -93,6 +93,10 @@ input[type="search"]::-webkit-search-cancel-button {
     -webkit-appearance: none;
 }
 
+select {
+    color: var(--industrial-color);
+}
+
 .mobile-menu {
     display: none;
     position: absolute;
@@ -173,5 +177,5 @@ footer {
     .nav-show {
         display: flex;
     }
-    
+
 }
