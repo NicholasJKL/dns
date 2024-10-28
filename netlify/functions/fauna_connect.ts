@@ -1,4 +1,4 @@
-import faunadb from 'faunadb';
+import faunadb, { Create, Collection } from 'faunadb';
 
 
 const q = faunadb.query;
@@ -8,7 +8,7 @@ const client = new faunadb.Client({ secret: process.env.FAUNA_SECRET || '' });
 exports.handler = async (event, context) => {
   try {
     const data = await client.query(
-      q.Create(q.Collection('Items'), { data: { name: 'Test Record' } })
+      Create(Collection('Items'), { data: { name: 'Test Record' } })
     );
     console.log('successful');
     return {
