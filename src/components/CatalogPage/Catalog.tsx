@@ -26,7 +26,6 @@ const Catalog: FC = () => {
             .then(data => console.log(data))
             .catch(error => console.error('Error:', error));
 
-        setItems(items);
 
         /* 
         setItems([
