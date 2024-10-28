@@ -6,7 +6,6 @@ import Item from '../../models/Item';
 import '../../styles/common_styles.css';
 import '../../styles/catalog_styles.css';
 
-const fauna_get = require('../../../netlify/functions/fauna_connect');
 
 const Catalog: FC = () => {
 
@@ -20,7 +19,12 @@ const Catalog: FC = () => {
 
     useEffect(() => {
 
-        const items: Item[] = fauna_get();
+        const url = 'https://rococo-quokka-cd4373.netlify.app/.netlify/functions/fauna_connect'
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
 
         setItems(items);
 
