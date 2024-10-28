@@ -20,26 +20,24 @@ const Catalog: FC = () => {
 
     useEffect(() => {
 
-        let loadedItems: Item[] = [];
         const url = 'https://rococo-quokka-cd4373.netlify.app/.netlify/functions/fauna_connect'
 
         const getItemsFromDb = async () => {
             const response = await fetch(url);
             const { data } = await response.json();
 
-            data.forEach((item: ItemDb) => {
-                const newItem: Item = {
+            const loadedItems: Item[] = data.map((item: ItemDb) => (
+                {
                     item_id: item.id,
                     item_name: item.item_name,
                     item_price: item.item_price,
                     image_path: item.image_path
-                };
-                loadedItems.push(newItem);
-            }
-            );
+                }
+            ));
+            setItems(loadedItems);
         }
         getItemsFromDb();
-        setItems(loadedItems);
+
 
 
         /* 
