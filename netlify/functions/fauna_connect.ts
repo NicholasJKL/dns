@@ -13,11 +13,7 @@ exports.handler = async (event, context) => {
     // Compose a query
     const query = fql`  
         Items.create({
-        name: "key lime",
-        description: "Organic, 1 ct",
-        price: 79,
-        category: produce,
-        stock: 2000
+        name: "new_item"
       })`;
 
     // Run the query
