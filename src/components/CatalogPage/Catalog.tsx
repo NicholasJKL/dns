@@ -10,7 +10,7 @@ import '../../styles/catalog_styles.css';
 
 const Catalog: FC = () => {
 
-    const [items] = useState<Item[]>([]);
+    const [items, setItems] = useState<Item[]>([]);
     const [isActive, setActive] = useState<boolean>(false);
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const [searchValue, setSearchValue] = useState<string>('');
@@ -25,10 +25,17 @@ const Catalog: FC = () => {
         const getItemsFromDb = async () => {
             const response = await fetch(url);
             const { data } = await response.json();
-            data.forEach((item: ItemDb) => console.log(item));
 
-
-
+            data.forEach((item: ItemDb) => {
+                const newItem: Item = {
+                    item_id: item.id,
+                    item_name: item.item_name,
+                    item_price: item.item_price,
+                    image_path: item.image_path
+                };
+                setItems([...items, newItem]);
+            }
+            );
         }
         getItemsFromDb();
 
