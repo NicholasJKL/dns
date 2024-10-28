@@ -7,9 +7,11 @@ const client = new Client({
   secret: process.env.FAUNA_SECRET
 });
 
-try {
-  // Compose a query
-  const query = fql`
+
+exports.handler = async (event, context) => {
+  try {
+    // Compose a query
+    const query = fql`  
         Items.create({
         name: "key lime",
         description: "Organic, 1 ct",
@@ -18,15 +20,16 @@ try {
         stock: 2000
       })`;
 
-  // Run the query
-  const response = await client.query(query);
-  console.log(response.data);
+    // Run the query
+    const response = await client.query(query);
+    console.log(response.data);
 
-} catch (error) {
-  if (error instanceof FaunaError) {
-    console.log(error);
+  } catch (error) {
+    if (error instanceof FaunaError) {
+      console.log(error);
+    }
+  } finally {
+    // Clean up any remaining resources
+    client.close();
   }
-} finally {
-  // Clean up any remaining resources
-  client.close();
 }
