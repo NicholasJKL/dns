@@ -8,7 +8,7 @@ const client = new Client({
 });
 
 
-exports.fauna_get = async () => {
+exports.fauna_get = async (event, context) => {
   try {
     // Compose a query
     const query = fql`  
