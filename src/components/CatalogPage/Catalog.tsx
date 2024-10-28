@@ -9,7 +9,7 @@ import '../../styles/catalog_styles.css';
 
 const Catalog: FC = () => {
 
-    const [items] = useState<Item[]>([]);
+    const [items, setItems] = useState<Item[]>([]);
     const [isActive, setActive] = useState<boolean>(false);
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const [searchValue, setSearchValue] = useState<string>('');
@@ -23,7 +23,7 @@ const Catalog: FC = () => {
 
         fetch(url)
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => setItems(data))
             .catch(error => console.error('Error:', error));
 
 
