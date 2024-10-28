@@ -26,7 +26,7 @@ const Catalog: FC = () => {
             const data = await response.json();
 
             data.map((item: any) => {
-                console.log(item);
+                return console.log(item);
             })
         }
         getItemsFromDb();
