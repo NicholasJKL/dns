@@ -20,6 +20,7 @@ const Catalog: FC = () => {
 
     useEffect(() => {
 
+        let loadedItems: Item[] = [];
         const url = 'https://rococo-quokka-cd4373.netlify.app/.netlify/functions/fauna_connect'
 
         const getItemsFromDb = async () => {
@@ -33,12 +34,12 @@ const Catalog: FC = () => {
                     item_price: item.item_price,
                     image_path: item.image_path
                 };
-                setItems([...items, newItem]);
+                loadedItems.push(newItem);
             }
             );
         }
         getItemsFromDb();
-
+        setItems(loadedItems);
 
 
         /* 
