@@ -2,7 +2,6 @@ import React, { FC, useState, useRef, useEffect, ChangeEvent, MouseEvent, FormEv
 
 import CatalogElement from './CatalogElement';
 import Item from '../../models/Item';
-import ItemDb from '../../models/ItemDb';
 
 import '../../styles/common_styles.css';
 import '../../styles/catalog_styles.css';
