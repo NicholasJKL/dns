@@ -8,7 +8,7 @@ const client = new faunadb.Client({ secret: process.env.FAUNA_SECRET || '' });
 exports.handler = async (event, context) => {
   try {
     const data  = await client.query(
-      q.Create(q.Collection('your_collection'), { data: { name: 'Test Record' } })
+      q.Create(q.Collection('Items'), { data: { name: 'Test Record' } })
     );
 
     return {
