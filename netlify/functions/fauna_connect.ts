@@ -1,26 +1,32 @@
-import faunadb, { Create, Collection } from 'faunadb';
+import { Client, fql, FaunaError } from "fauna";
+// Use `require` for CommonJS:
+// const { Client, fql, FaunaError } = require('fauna');
 
+// Initialize the client to connect to Fauna
+const client = new Client({
+  secret: process.env.FAUNA_SECRET
+});
 
-const q = faunadb.query;
+try {
+  // Compose a query
+  const query = fql`
+        Items.create({
+        name: "key lime",
+        description: "Organic, 1 ct",
+        price: 79,
+        category: produce,
+        stock: 2000
+      })`;
 
-const client = new faunadb.Client({ secret: process.env.FAUNA_SECRET || '' });
+  // Run the query
+  const response = await client.query(query);
+  console.log(response.data);
 
-exports.handler = async (event, context) => {
-  try {
-    const data = await client.query(
-      Create(Collection('Items'), { data: { name: 'Test Record' } })
-    );
-    console.log('successful');
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ message: 'Record created successfully!', data }),
-    };
-  } catch (error) {
-    console.log('error');
-    console.error(error);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'FaunaDB error' }),
-    };
+} catch (error) {
+  if (error instanceof FaunaError) {
+    console.log(error);
   }
-};
+} finally {
+  // Clean up any remaining resources
+  client.close();
+}
