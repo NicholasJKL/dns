@@ -25,7 +25,7 @@ const Catalog: FC = () => {
             const response = await fetch(url);
             const data = await response.json();
 
-            console.log(data);
+            console.log(JSON.parse(data));
 
         }
         getItemsFromDb();
