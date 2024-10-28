@@ -23,11 +23,12 @@ const Catalog: FC = () => {
 
         const getItemsFromDb = async () => {
             const response = await fetch(url);
-            const data = await response.json();
+            const data = Object.values(await response.json());
 
-            data.map((item: any) => {
+            data.map(item => {
                 return console.log(item);
             })
+
         }
         getItemsFromDb();
 
