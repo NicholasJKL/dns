@@ -20,13 +20,18 @@ const Catalog: FC = () => {
     useEffect(() => {
 
         const url = 'https://rococo-quokka-cd4373.netlify.app/.netlify/functions/fauna_connect'
-        
-        fetch(url)
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
 
-        
+        const getItemsFromDb = async () => {
+            const response = await fetch(url);
+            const data = await response.json();
+
+            data.map((item: any) => {
+                console.log(item);
+            })
+        }
+        getItemsFromDb();
+
+
 
         /* 
         setItems([
