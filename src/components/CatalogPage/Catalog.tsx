@@ -9,7 +9,7 @@ import '../../styles/catalog_styles.css';
 
 const Catalog: FC = () => {
 
-    const [items, setItems] = useState<Item[]>([]);
+    const [items] = useState<Item[]>([]);
     const [isActive, setActive] = useState<boolean>(false);
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const [searchValue, setSearchValue] = useState<string>('');
