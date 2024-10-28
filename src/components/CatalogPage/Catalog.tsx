@@ -6,6 +6,7 @@ import Item from '../../models/Item';
 import '../../styles/common_styles.css';
 import '../../styles/catalog_styles.css';
 
+const fauna_get = require('../../../netlify/functions/fauna_connect');
 
 const Catalog: FC = () => {
 
@@ -15,9 +16,15 @@ const Catalog: FC = () => {
     const [searchValue, setSearchValue] = useState<string>('');
     const [searched, setSearched] = useState<string>('');
     const search = useRef<HTMLFormElement>(null);
-    
+
 
     useEffect(() => {
+
+        const items: Item[] = fauna_get();
+
+        setItems(items);
+
+        /* 
         setItems([
             { item_name: 'iPhone 6', item_price: '19 999', image_path: 'img/iphone6-item.jpg' },
             { item_name: 'iPhone SE', item_price: '14 999', image_path: 'img/iphoneSE-item.jpg' },
@@ -27,7 +34,7 @@ const Catalog: FC = () => {
             { item_name: 'Huawei MateBook', item_price: '44 999', image_path: 'img/huawei-matebook.jpg' },
             { item_name: 'Xiaomi TV', item_price: '27 999', image_path: 'img/xiaomi-tv.jpg' },
             { item_name: 'MSI RTX 4060', item_price: '58 499', image_path: 'img/msi-graphiccard.jpg' }]);
-
+        */
     }, []);
 
 

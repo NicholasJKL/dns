@@ -8,17 +8,15 @@ const client = new Client({
 });
 
 
-exports.handler = async (event, context) => {
+exports.fauna_get = async () => {
   try {
     // Compose a query
     const query = fql`  
-        Items.create({
-        name: "new_item"
-      })`;
+        Items.all()`;
 
     // Run the query
     const response = await client.query(query);
-    console.log(response.data);
+    return response.data
 
   } catch (error) {
     if (error instanceof FaunaError) {
