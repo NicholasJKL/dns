@@ -16,7 +16,11 @@ exports.handler = async (event, context) => {
 
     // Run the query
     const response = await client.query(query);
-    return response.data
+    console.log(response.data)
+    return {
+      statusCode: 200,
+      body: JSON.stringify(response.data),
+    };
 
   } catch (error) {
     if (error instanceof FaunaError) {
