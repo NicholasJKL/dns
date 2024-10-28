@@ -2,6 +2,7 @@ import React, { FC, useState, useRef, useEffect, ChangeEvent, MouseEvent, FormEv
 
 import CatalogElement from './CatalogElement';
 import Item from '../../models/Item';
+import ItemDb from '../../models/ItemDb';
 
 import '../../styles/common_styles.css';
 import '../../styles/catalog_styles.css';
@@ -23,11 +24,11 @@ const Catalog: FC = () => {
 
         const getItemsFromDb = async () => {
             const response = await fetch(url);
-            const data = Object.values(await response.json());
+            const data = await response.json();
 
-            data.map(item => {
+            for (const item in data) {
                 return console.log(item);
-            })
+            }
 
         }
         getItemsFromDb();
