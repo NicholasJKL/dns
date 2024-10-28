@@ -28,8 +28,5 @@ exports.handler = async (event, context) => {
     if (error instanceof FaunaError) {
       console.log(error);
     }
-  } finally {
-    // Clean up any remaining resources
-    client.close();
   }
 }
