@@ -2,7 +2,8 @@
     display: flex;
     flex-direction: column;
     margin: auto;
-    width: fit-content;
+    width: 36%;
+    min-width: 320px;
     padding: 36px;
     border-radius: 8px;
     background-color: var(--white-color);
@@ -22,8 +23,6 @@
     border: 0;
     background-color: var(--neutral-color);
     border-radius: 8px;
-    min-width: 280px;
-    width: 440px;
     margin-bottom: 16px;
     padding: 8px;
     outline: 0;
@@ -36,7 +35,11 @@
 
 
 @media (max-width:1023px) {
+    .auth-reg-form {
+        padding: 18px;
+    }
+
     .auth-reg-form input {
-        font-size: 18px;
+        font-size: 16px;
     }
 }
