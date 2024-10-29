@@ -19,7 +19,7 @@
     flex-direction: column;
     margin: 36px auto 0 auto;
     padding: 24px;
-    width: 50%;
+    max-width: 40%;
     min-width: 320px;
     border-radius: 8px;
     background-color: var(--white-color);
@@ -58,7 +58,8 @@ textarea {
     border-radius: 8px;
 }
 
-.about-feedback input[type=radio],input[type=checkbox] {
+.about-feedback input[type=radio],
+input[type=checkbox] {
     transform: scale(1.2);
 }
 
@@ -66,5 +67,9 @@ textarea {
     .about-content-grid {
         grid-template-columns: 1fr;
         gap: 24px;
+    }
+
+    .about-feedback {
+        max-width: fit-content;
     }
 }
