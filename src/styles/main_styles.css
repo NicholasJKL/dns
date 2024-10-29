@@ -29,6 +29,10 @@
     font-size: 1.66em;
 }
 
+.main-brand-grid a{
+    width: fit-content;
+}
+
 .main-brand-element {
     display: flex;
     align-items: center;
@@ -39,7 +43,6 @@
     background-color: var(--white-color);
     border-radius: 12px;
 }
-
 
 .main-brand-element img {
     display: block;
