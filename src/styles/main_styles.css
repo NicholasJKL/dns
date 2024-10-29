@@ -4,7 +4,6 @@
 
 .main-content h1 {
     font-size: 3.5em;
-    
 }
 
 .main-content-grid {
@@ -18,10 +17,12 @@
 .main-content-text {
     font-size: 3em;
     text-align: center;
+    margin-bottom: 24px;
 }
 
 .main-brand-grid {
     display: grid;
+    margin-bottom: 24px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     align-items: center;
     justify-content: center;
@@ -33,7 +34,7 @@
     align-items: center;
     width: 120px;
     height: 60px;
-    margin: 0 4px 8px 4px;
+    margin: 0 4px 16px 4px;
     padding: 4px;
     background-color: var(--white-color);
     border-radius: 12px;
@@ -63,11 +64,21 @@
 @media (max-width:1023px) {
     .main-content-grid {
         grid-template-columns: 1fr;
+        justify-items: center;
         gap: 12px;
     }
 
     .main-brand-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 12px;
+        gap: 12px 48px;
     }
+
+    .main-content h1 {
+        font-size: 36px;
+    }
+
+    .main-content p {
+        font-size: 28px;
+    }
+
 }

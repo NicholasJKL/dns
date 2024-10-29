@@ -23,18 +23,23 @@ const Catalog: FC = () => {
         const url = 'https://rococo-quokka-cd4373.netlify.app/.netlify/functions/fauna_connect'
 
         const getItemsFromDb = async () => {
-            const response = await fetch(url);
-            const { data } = await response.json();
+            try {
+                const response = await fetch(url);
+                const { data } = await response.json();
 
-            const loadedItems: Item[] = data.map((item: ItemDb) => (
-                {
-                    item_id: item.id,
-                    item_name: item.item_name,
-                    item_price: item.item_price,
-                    image_path: item.image_path
-                }
-            ));
-            setItems(loadedItems);
+                const loadedItems: Item[] = data.map((item: ItemDb) => (
+                    {
+                        item_id: item.id,
+                        item_name: item.item_name,
+                        item_price: item.item_price,
+                        image_path: item.image_path
+                    }
+                ));
+                setItems(loadedItems);
+            }
+            catch {
+                console.error('Failed to load data');
+            }
         }
         getItemsFromDb();
 

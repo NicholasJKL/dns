@@ -4,7 +4,11 @@
     justify-content: center;
     align-items: center;
     gap: 1em;
-    font-size: 1.2em;
+    font-size: 1.4em;
+}
+
+.contacts-content h1 {
+    text-align: center;
 }
 
 .dns-map {

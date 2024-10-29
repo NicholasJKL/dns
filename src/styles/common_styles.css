@@ -34,6 +34,7 @@ header {
     background-color: var(--industrial-color);
     border-radius: 16px;
     box-shadow: 6px 4px 4px var(--industrial-color);
+    z-index: 1;
 }
 
 nav ul {
@@ -63,7 +64,7 @@ nav ul {
 }
 
 main {
-    margin: 4% 0 4% 0;
+    margin: 5% 0 8% 0;
     min-height: 69vh;
 }
 
@@ -85,7 +86,7 @@ button:hover {
 
 label {
     font-size: 22px;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
     text-indent: 0;
 }
 
