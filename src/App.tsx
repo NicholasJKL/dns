@@ -10,7 +10,6 @@ import Auth from './components/AuthPage/Auth';
 import Footer from './components/Common/Footer';
 import Registration from './components/RegistrationPage/Registration';
 import Item from './components/ProductPage/Product';
-import Test from './components/Test';
 
 
 function App() {
@@ -26,7 +25,6 @@ function App() {
           <Route path='/auth' element={<Auth />}></Route>
           <Route path='/registration' element={<Registration />}></Route>
           <Route path='/item' element={<Item item_id={''} />}></Route>
-          <Route path='/test' element={<Test />}></Route>
         </Routes>
       </main>
       <Footer></Footer>

@@ -1,4 +1,3 @@
-/* 
 import { Client, fql, FaunaError } from "fauna";
 
 
@@ -25,4 +24,3 @@ exports.handler = async (event, context) => {
         }
     }
 }
-    */
