@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import Item from '../../models/Item';
-import ItemDb from '../../models/ItemDb';
 
 import '../../styles/common_styles.css';
 import '../../styles/item_styles.css';
