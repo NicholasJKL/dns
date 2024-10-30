@@ -14,13 +14,13 @@ interface ItemProperty {
 const Product: FC<ItemProperty> = ({ item_id }) => {
 
     const { state } = useLocation();
+    item_id = state.item_id;
     const [item, setItem] = useState<Item>({ item_id: item_id, item_name: '', item_price: '', image_path: '' });
 
     useEffect(() => {
 
         const url = `https://rococo-quokka-cd4373.netlify.app/.netlify/functions/DbGetItemById?item_id=${item_id}`
-        item_id = state.item_id;
-        
+
         const getItemFromDb = async () => {
             try {
                 const response = await fetch(url);
