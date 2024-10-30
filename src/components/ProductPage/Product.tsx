@@ -15,6 +15,7 @@ const Product: FC<ItemProperty> = ({ item_id }) => {
 
     const { state } = useLocation();
     item_id = state.item_id;
+    
     const [item, setItem] = useState<Item>({ item_id: item_id, item_name: '', item_price: '', image_path: '' });
 
     useEffect(() => {
@@ -25,7 +26,6 @@ const Product: FC<ItemProperty> = ({ item_id }) => {
             try {
                 const response = await fetch(url);
                 const data = await response.json();
-                console.log(data);
 
                 const loadedItem: Item = (
                     {
@@ -42,7 +42,7 @@ const Product: FC<ItemProperty> = ({ item_id }) => {
             }
         }
         getItemFromDb();
-    });
+    }, [item_id]);
 
     return (
         <div className='item-grid'>

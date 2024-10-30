@@ -25,7 +25,7 @@ const Catalog: FC = () => {
         const getItemsFromDb = async () => {
             try {
                 const response = await fetch(url);
-                const { data } = await response.json();
+                const data = await response.json();
                 
                 const loadedItems: Item[] = data.map((item: ItemDb) => (
                     {
