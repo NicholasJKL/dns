@@ -5,18 +5,19 @@ import '../../styles/common_styles.css';
 import '../../styles/catalog_styles.css';
 
 interface CatalogElementProps {
+    item_id: string | number,
     item_name: string,
     item_price: string,
     image_path: string
 }
 
 
-const CatalogElement: FC<CatalogElementProps> = ({ item_name, item_price, image_path }) => {
+const CatalogElement: FC<CatalogElementProps> = ({ item_id, item_name, item_price, image_path }) => {
 
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate('/item', { state: { item_name: item_name, item_price: item_price, image_path: image_path } });
+        navigate('/item', { state: { item_id: item_id } });
     }
 
     return (

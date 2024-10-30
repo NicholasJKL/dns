@@ -1,5 +1,5 @@
 interface ItemDb {
-    id: number,
+    id: string | number,
     coll: Object,
     item_name: string,
     item_price: string,
