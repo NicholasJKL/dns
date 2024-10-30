@@ -18,7 +18,7 @@ const Product: FC<ItemProperty> = ({ item_id }) => {
 
     useEffect(() => {
 
-        const url = `https://rococo-quokka-cd4373.netlify.app/.netlify/functions/DbGetItemById?${item_id}`
+        const url = `https://rococo-quokka-cd4373.netlify.app/.netlify/functions/DbGetItemById?item_id=${item_id}`
 
         const getItemFromDb = async () => {
             try {
