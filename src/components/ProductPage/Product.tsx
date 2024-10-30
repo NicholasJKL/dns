@@ -24,8 +24,8 @@ const Product: FC<ItemProperty> = ({ item_id }) => {
         const getItemFromDb = async () => {
             try {
                 const response = await fetch(url);
+                console.log(response.status);
                 const { data } = await response.json();
-                console.log(data);
 
                 const loadedItem: Item = (
                     {
