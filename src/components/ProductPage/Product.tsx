@@ -18,8 +18,9 @@ const Product: FC<ItemProperty> = ({ item_id }) => {
 
     useEffect(() => {
 
-        const url = `https://rococo-quokka-cd4373.netlify.app/.netlify/functions/DbGetItemById?item_id=`
-
+        const url = `https://rococo-quokka-cd4373.netlify.app/.netlify/functions/DbGetItemById?item_id=${item_id}`
+        item_id = state.item_id;
+        
         const getItemFromDb = async () => {
             try {
                 const response = await fetch(url);
@@ -41,8 +42,6 @@ const Product: FC<ItemProperty> = ({ item_id }) => {
         }
         getItemFromDb();
     });
-
-    item_id = state.item_id;
 
     return (
         <div className='item-grid'>
