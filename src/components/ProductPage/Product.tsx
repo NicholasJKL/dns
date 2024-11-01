@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 
 import Item from '../../models/Item';
 
+import { getItemById } from '../../requests';
+
 import '../../styles/common_styles.css';
 import '../../styles/item_styles.css';
 
@@ -15,33 +17,21 @@ const Product: FC<ItemProperty> = ({ item_id }) => {
 
     const { state } = useLocation();
     item_id = state.item_id;
-    
+
     const [item, setItem] = useState<Item>({ item_id: item_id, item_name: '', item_price: '', image_path: '' });
 
     useEffect(() => {
-
-        const url = `https://rococo-quokka-cd4373.netlify.app/.netlify/functions/DbGetItemById?item_id=${item_id}`
-
-        const getItemFromDb = async () => {
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-
-                const loadedItem: Item = (
-                    {
-                        item_id: data.id,
-                        item_name: data.item_name,
-                        item_price: data.item_price,
-                        image_path: data.image_path
-                    }
-                );
-                setItem(loadedItem);
-            }
-            catch {
-                console.error(`Failed to load data`);
-            }
-        }
-        getItemFromDb();
+        getItemById(item_id).then(queryObject => {
+            const loadedItem: Item = (
+                {
+                    item_id: queryObject.id,
+                    item_name: queryObject.item_name,
+                    item_price: queryObject.item_price,
+                    image_path: queryObject.image_path
+                }
+            )
+            setItem(loadedItem);
+        });
     }, [item_id]);
 
     return (

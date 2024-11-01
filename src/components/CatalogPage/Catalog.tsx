@@ -4,6 +4,8 @@ import CatalogElement from './CatalogElement';
 import Item from '../../models/Item';
 import ItemDb from '../../models/ItemDb';
 
+import { getAllItems, getSearchingItems } from '../../requests';
+
 import '../../styles/common_styles.css';
 import '../../styles/catalog_styles.css';
 
@@ -17,32 +19,33 @@ const Catalog: FC = () => {
     const [searched, setSearched] = useState<string>('');
     const search = useRef<HTMLFormElement>(null);
 
+    const setItemsFromQuery = (queryObject: { data: ItemDb[] }) => {
+        const loadedItems: Item[] = queryObject.data.map((item: ItemDb) => (
+            {
+                item_id: item.id,
+                item_name: item.item_name,
+                item_price: item.item_price,
+                image_path: item.image_path
+            }
+        )
+        );
+        setItems(loadedItems);
+    }
 
     useEffect(() => {
-
-        const url = 'https://rococo-quokka-cd4373.netlify.app/.netlify/functions/fauna_connect'
-
-        const getItemsFromDb = async () => {
-            try {
-                const response = await fetch(url);
-                const { data } = await response.json();
-
-                const loadedItems: Item[] = data.map((item: ItemDb) => (
-                    {
-                        item_id: item.id,
-                        item_name: item.item_name,
-                        item_price: item.item_price,
-                        image_path: item.image_path
-                    }
-                ));
-                setItems(loadedItems);
-            }
-            catch {
-                console.error(`Failed to load data`);
-            }
+        setItems([]);
+        if (searched.length === 0) {
+            getAllItems().then(queryObject => {
+                if (queryObject !== undefined)
+                    setItemsFromQuery(queryObject);
+            });
         }
-        getItemsFromDb();
-
+        else {
+            getSearchingItems(searched.toLowerCase()).then(queryObject => {
+                if (queryObject !== undefined)
+                    setItemsFromQuery(queryObject);
+            });
+        }
 
 
         /* 
@@ -57,7 +60,7 @@ const Catalog: FC = () => {
             { item_id: 7, item_name: 'MSI RTX 4060', item_price: '58 499', image_path: 'img/msi-graphiccard.jpg' }]);
         */
 
-    }, []);
+    }, [searched]);
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
@@ -74,6 +77,7 @@ const Catalog: FC = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         setSearched(searchValue);
 
         if (searchValue.length === 0) {
@@ -95,22 +99,21 @@ const Catalog: FC = () => {
         <div>
             <form className='catalog-search' onSubmit={handleSubmit} ref={search}>
                 <input type="search" placeholder='Поиск' maxLength={64} onChange={handleInput} />
-                <button type='submit' className={isActive ? 'catalog-clear-button' : 'catalog-clear-button hidden'} onClick={handleClear}></button>
+                <button type='reset' className={isActive ? 'catalog-clear-button' : 'catalog-clear-button hidden'} onClick={handleClear}></button>
                 <button type='submit' className='catalog-search-button'></button>
             </form>
 
-            {(isSearching) ?
+            {(isSearching) &&
                 <div className='search-result'>
                     <p><b>Результаты поиска</b><br></br>
                         Вы искали: {searched}</p>
                 </div>
-                :
-                <div className='catalog-content'>
-                    {items.map((item) => {
-                        return (<CatalogElement key={item.item_id} item_id={item.item_id} item_name={item.item_name} item_price={item.item_price} image_path={item.image_path}></CatalogElement>)
-                    })}
-                </div>
             }
+            <div className='catalog-content'>
+                {items.map((item) => {
+                    return (<CatalogElement key={item.item_id} item_id={item.item_id} item_name={item.item_name} item_price={item.item_price} image_path={item.image_path}></CatalogElement>)
+                })}
+            </div>
             <div className='catalog-pagination'>
                 <button className='catalog-pagination-left'></button>
                 <div className='catalog-pagination-current'><p>1</p></div>

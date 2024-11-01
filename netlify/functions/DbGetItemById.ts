@@ -6,7 +6,7 @@ const client = new Client({
 });
 
 
-exports.handler = async (event, context) => {
+exports.handler = async (event: any, context: any) => {
     try {
         const query = fql`  
         Items.firstWhere(item => item.id == ${event.queryStringParameters?.item_id})`;
