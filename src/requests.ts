@@ -1,4 +1,5 @@
-import { getAllItemsFromDb, getItemByIdFromDb, getSearchingItemsFromDb } from './test/db_test'
+import { getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb } from './test/db_test'
+import User from './models/User';
 
 const getAllItems = async (): Promise<any> => {
 
@@ -11,7 +12,7 @@ const getAllItems = async (): Promise<any> => {
 
     catch {
         try {
-            const queryObject = getAllItemsFromDb();
+            const queryObject = getAllItemsDb();
             return queryObject;
         }
         catch {
@@ -29,7 +30,7 @@ const getItemById = async (item_id: string | number) => {
     }
     catch {
         try {
-            const queryObject = getItemByIdFromDb({ item_id: item_id });
+            const queryObject = getItemByIdDb({ item_id: item_id });
             return queryObject;
         }
         catch {
@@ -47,7 +48,7 @@ const getSearchingItems = async (searchPrompt: string) => {
     }
     catch {
         try {
-            const queryObject = getSearchingItemsFromDb({ searchPrompt: searchPrompt});
+            const queryObject = getSearchingItemsDb({ searchPrompt: searchPrompt});
             return queryObject;
         }
         catch {
@@ -56,4 +57,24 @@ const getSearchingItems = async (searchPrompt: string) => {
     }
 }
 
-export { getAllItems, getItemById, getSearchingItems };
+const createUser = async (user: User) => {
+    const url = `---`
+    
+    try {
+        const response = await fetch(url);
+        return await response.json();
+    }
+    catch {
+        try {
+            const queryObject = createUserDb(user);
+            return queryObject;
+        }
+        catch {
+            console.error(`Failed to create user`);
+        }
+    }
+}
+
+
+
+export { getAllItems, getItemById, getSearchingItems, createUser };
