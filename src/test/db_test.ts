@@ -98,7 +98,22 @@ const createUserDb = async (user: User): Promise<any> => {
     }
 }
 
+const getUserDb = async (params: User) => {
+    const query = fql`
+    Users.firstWhere(user => user.user_email === ${params.user_email})`;
+    const response = await client.query(query);
+    if (response?.data.user_password === params.user_password) {
+        return response.data;
+    }
+    else {
+        return Error('Некорректно указана почта или неправильный пароль');
+    }
+
+}
 
 
 
-export { getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb };
+
+
+
+export { getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb, getUserDb };
