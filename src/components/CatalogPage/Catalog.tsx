@@ -36,13 +36,13 @@ const Catalog: FC = () => {
         setItems([]);
         if (searched.length === 0) {
             getAllItems().then(queryObject => {
-                if (queryObject !== undefined)
+                if (queryObject !== undefined && queryObject !== null)
                     setItemsFromQuery(queryObject);
             });
         }
         else {
             getSearchingItems(searched.toLowerCase()).then(queryObject => {
-                if (queryObject !== undefined)
+                if (queryObject !== undefined && queryObject !== null)
                     setItemsFromQuery(queryObject);
             });
         }

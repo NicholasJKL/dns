@@ -6,6 +6,7 @@ import User from '../../models/User';
 import '../../styles/common_styles.css';
 import '../../styles/auth_styles.css';
 
+// TODO: Поменять change
 
 const Registration: FC = () => {
 

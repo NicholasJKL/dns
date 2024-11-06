@@ -1,4 +1,4 @@
-import { getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb } from './test/db_test'
+import { getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb, getUserDb } from './test/db_test'
 import User from './models/User';
 
 const getAllItems = async (): Promise<any> => {
@@ -41,14 +41,14 @@ const getItemById = async (item_id: string | number) => {
 
 const getSearchingItems = async (searchPrompt: string) => {
     const url = `https://rococo-quokka-cd4373.netlify.app/.netlify/functions/DbGetItemById?searchPrompt=${searchPrompt}`
-    
+
     try {
         const response = await fetch(url);
         return await response.json();
     }
     catch {
         try {
-            const queryObject = getSearchingItemsDb({ searchPrompt: searchPrompt});
+            const queryObject = getSearchingItemsDb({ searchPrompt: searchPrompt });
             return queryObject;
         }
         catch {
@@ -59,7 +59,7 @@ const getSearchingItems = async (searchPrompt: string) => {
 
 const createUser = async (user: User) => {
     const url = `---`
-    
+
     try {
         const response = await fetch(url);
         return await response.json();
@@ -75,6 +75,24 @@ const createUser = async (user: User) => {
     }
 }
 
+const getUser = async (user: User) => {
+    const url = `---`
+
+    try {
+        const response = await fetch(url);
+        return await response.json();
+    }
+    catch {
+        try {
+            const queryObject = getUserDb(user);
+            return queryObject;
+        }
+        catch {
+            console.error(`Failed to get user`);
+        }
+    }
+}
 
 
-export { getAllItems, getItemById, getSearchingItems, createUser };
+
+export { getAllItems, getItemById, getSearchingItems, createUser, getUser };
