@@ -21,7 +21,9 @@ const Auth: FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    getUser(user).then(user => console.log(user)).catch(error => console.error(error));
+    getUser(user)
+    .then(user => console.log(user))
+    .catch(error => alert(error.message));
   }
 
   return (
