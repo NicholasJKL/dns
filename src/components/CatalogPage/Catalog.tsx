@@ -48,7 +48,7 @@ const Catalog: FC = () => {
         }
 
 
-        /* 
+        
         setItems([
             { item_id: 0, item_name: 'iPhone 6', item_price: '19 999', image_path: 'img/iphone6-item.jpg' },
             { item_id: 1, item_name: 'iPhone SE', item_price: '14 999', image_path: 'img/iphoneSE-item.jpg' },
@@ -58,7 +58,7 @@ const Catalog: FC = () => {
             { item_id: 5, item_name: 'Huawei MateBook', item_price: '44 999', image_path: 'img/huawei-matebook.jpg' },
             { item_id: 6, item_name: 'Xiaomi TV', item_price: '27 999', image_path: 'img/xiaomi-tv.jpg' },
             { item_id: 7, item_name: 'MSI RTX 4060', item_price: '58 499', image_path: 'img/msi-graphiccard.jpg' }]);
-        */
+        
 
     }, [searched]);
 
@@ -111,7 +111,7 @@ const Catalog: FC = () => {
             }
             <div className='catalog-content'>
                 {items.map((item) => {
-                    return (<CatalogElement key={item.item_id} item_id={item.item_id} item_name={item.item_name} item_price={item.item_price} image_path={item.image_path}></CatalogElement>)
+                    return (<CatalogElement key={item.item_id} item={item} type='catalog'></CatalogElement>)
                 })}
             </div>
             <div className='catalog-pagination'>

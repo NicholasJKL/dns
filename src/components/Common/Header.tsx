@@ -1,9 +1,16 @@
 import React, { FC, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
+import User from '../../models/User';
+
 import '../../styles/common_styles.css';
 
-const Header: FC = () => {
+
+interface HeaderProps {
+  user: User
+}
+
+const Header: FC<HeaderProps> = ({ user }) => {
 
   const [isActive, setIsActive] = useState<boolean>(false);
 
@@ -25,8 +32,17 @@ const Header: FC = () => {
           <NavLink to='/about' className={({ isActive }) => isActive ? 'link link-active' : 'link'} onClick={handleLinkClick}><li>О нас</li></NavLink>
           <NavLink to='/catalog' className={({ isActive }) => isActive ? 'link link-active' : 'link'} onClick={handleLinkClick}><li>Каталог</li></NavLink>
           <NavLink to='/contacts' className={({ isActive }) => isActive ? 'link link-active' : 'link'} onClick={handleLinkClick}><li>Контакты</li></NavLink>
-          <NavLink to='/auth' className={({ isActive }) => isActive ? 'link link-active' : 'link'} onClick={handleLinkClick}><li>Вход</li></NavLink>
-          <NavLink to='/registration' className={({ isActive }) => isActive ? 'link link-active' : 'link'} onClick={handleLinkClick}><li>Регистрация</li></NavLink>
+          {(user.user_id.toString().length === 0) ?
+            <>
+              <NavLink to='/auth' className={({ isActive }) => isActive ? 'link link-active' : 'link'} onClick={handleLinkClick}><li>Вход</li></NavLink>
+              <NavLink to='/registration' className={({ isActive }) => isActive ? 'link link-active' : 'link'} onClick={handleLinkClick}><li>Регистрация</li></NavLink>
+            </>
+            :
+            <>
+              <NavLink to='/profile' className={({ isActive }) => isActive ? 'link link-active' : 'link'} onClick={handleLinkClick}><li>Профиль</li></NavLink>
+              <NavLink to='/cart' className={({ isActive }) => isActive ? 'link link-active' : 'link'} onClick={handleLinkClick}><li>Корзина</li></NavLink>
+            </>
+          }
         </ul>
       </nav>
     </header>
