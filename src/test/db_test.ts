@@ -12,15 +12,6 @@ const client = new Client({
     secret: `fnAFuzZAwbAAyh_qRiZxFypuhT5B2m7y7WG-Z6PG`
 });
 
-const getUserDb = async (params: User): Promise<User> => {
-    const query = fql`
-    Users.firstWhere(user => user.user_email == ${params.user_email})`;
-    const response = await client.query(query);
-    
-    if (response.data === null) {
-        throw new Error(`Неправильная почта или неправильный пароль`);
-    }
-    if (response.data.user_password === params.user_password) {
 
 const getAllItemsDb = async (): Promise<any> => {
     try {
@@ -98,20 +89,23 @@ const createUserDb = async (user: User): Promise<any> => {
     }
 }
 
-const getUserDb = async (params: User) => {
+const getUserDb = async (params: User): Promise<User> => {
+
     const query = fql`
-    Users.firstWhere(user => user.user_email === ${params.user_email})`;
+    Users.firstWhere(user => user.user_email == ${params.user_email})`;
+
     const response = await client.query(query);
-    if (response?.data.user_password === params.user_password) {
+
+    if (response.data === null) {
+        throw new Error(`Неправильная почта или неправильный пароль`);
+    }
+
+    else if (response.data.user_password === params.user_password) {
         return response.data;
     }
-    else {
-        return Error('Некорректно указана почта или неправильный пароль');
-    }
-
+    
+    throw new Error(`Ошибка авторизации`);
 }
-
-
 
 
 
