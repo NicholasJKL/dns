@@ -1,0 +1,11 @@
+.cart-header {
+    margin-bottom: 2%;
+}
+
+.cart-element button {
+    background-image: url(../../public/img/close.png);
+}
+
+.cart-element button:hover {
+    background-image: url(../../public/img/close_dns.png);
+}

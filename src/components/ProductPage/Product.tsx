@@ -21,17 +21,21 @@ const Product: FC<ItemProperty> = ({ item_id }) => {
     const [item, setItem] = useState<Item>({ item_id: item_id, item_name: '', item_price: '', image_path: '' });
 
     useEffect(() => {
-        getItemById(item_id).then(queryObject => {
-            const loadedItem: Item = (
-                {
-                    item_id: queryObject.id,
-                    item_name: queryObject.item_name,
-                    item_price: queryObject.item_price,
-                    image_path: queryObject.image_path
+        getItemById(item_id)
+            .then(queryObject => {
+                if (queryObject !== undefined && queryObject !== null) {
+                    const loadedItem: Item = (
+                        {
+                            item_id: queryObject.id,
+                            item_name: queryObject.item_name,
+                            item_price: queryObject.item_price,
+                            image_path: queryObject.image_path
+                        }
+                    )
+                    setItem(loadedItem);
                 }
-            )
-            setItem(loadedItem);
-        });
+            })
+            .catch(error => console.error(error));
     }, [item_id]);
 
     return (

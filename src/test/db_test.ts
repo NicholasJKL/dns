@@ -12,7 +12,6 @@ const client = new Client({
     secret: `fnAFuzZAwbAAyh_qRiZxFypuhT5B2m7y7WG-Z6PG`
 });
 
-
 const getAllItemsDb = async (): Promise<any> => {
     try {
         const query = fql`  
