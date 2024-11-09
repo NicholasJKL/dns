@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Item from '../../models/Item';
@@ -7,18 +7,24 @@ import '../../styles/common_styles.css';
 import '../../styles/catalog_styles.css';
 import '../../styles/cart_styles.css';
 
-interface CatalogElementProps {
+interface ProductElementProps {
     item: Item,
-    type: string
+    type: string,
+    onButtonClick: (item: Item) => void
 }
 
 
-const CatalogElement: FC<CatalogElementProps> = ({ item, type }) => {
+const ProductElement: FC<ProductElementProps> = ({ item, type, onButtonClick }) => {
 
     const navigate = useNavigate();
 
     const handleClick = () => {
         navigate('/item', { state: { item_id: item.item_id } });
+    }
+
+    const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        onButtonClick(item);
     }
 
     return (
@@ -30,11 +36,11 @@ const CatalogElement: FC<CatalogElementProps> = ({ item, type }) => {
 
             <div className={type === 'cart' ? 'cart-element catalog-element-buy' : 'catalog-element-buy'}>
                 <p>{item.item_price} ₽</p>
-                <button></button>
+                <button onClick={handleButtonClick}></button>
             </div>
         </div>
     );
 };
 
 
-export default CatalogElement;
+export default ProductElement;

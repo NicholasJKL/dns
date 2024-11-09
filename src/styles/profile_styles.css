@@ -17,6 +17,6 @@
     background-color: var(--industrial-color);
 }
 
-button {
+.profile-data button {
     align-self: flex-end;
 }

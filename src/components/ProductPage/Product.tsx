@@ -9,11 +9,11 @@ import '../../styles/common_styles.css';
 import '../../styles/item_styles.css';
 
 
-interface ItemProperty {
-    item_id: string | number;
+interface ProductProps {
+    item_id: string | number
 }
 
-const Product: FC<ItemProperty> = ({ item_id }) => {
+const Product: FC<ProductProps> = ({ item_id}) => {
 
     const { state } = useLocation();
     item_id = state.item_id;
