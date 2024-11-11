@@ -136,6 +136,53 @@ footer {
     box-shadow: 6px 4px 4px var(--industrial-color);
 }
 
+.counter-block {
+    display: flex;
+    margin-top: 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+
+}
+
+.counter-button-left,
+.counter-button-right {
+    width: 48px;
+    height: 48px;
+    border: 0;
+    border-radius: 8px;
+    background-size: 36px;
+    background-repeat: no-repeat;
+    background-color: var(--white-color);
+    background-position: center;
+}
+
+.counter-button-left {
+    background-image: url(../../public/img/arrow_left.png);
+    transition: background-image 0.4s;
+}
+
+.counter-button-right {
+    background-image: url(../../public/img/arrow_right.png);
+    transition: background-image 0.4s;
+}
+
+.counter-button-left:hover {
+    background-color: var(--white-color);
+    background-image: url(../../public/img/arrow_left_dns.png);
+    transition: background-image 0.4s;
+}
+
+.counter-button-right:hover {
+    background-color: var(--white-color);
+    background-image: url(../../public/img/arrow_right_dns.png);
+    transition: background-image 0.4s;
+}
+
+.counter-content {
+    font-size: 1.2em;
+}
+
 @media (max-width: 1023px) {
     body {
         width: 90%;

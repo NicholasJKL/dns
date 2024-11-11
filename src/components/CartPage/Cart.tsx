@@ -3,10 +3,12 @@ import React, { FC, useEffect, useState } from 'react';
 import User from '../../models/User';
 import Item from '../../models/Item';
 import CartElement from '../Common/ProductElement';
+import Counter from '../Common/Counter';
 
 import '../../styles/common_styles.css';
 import '../../styles/cart_styles.css';
 import '../../styles/catalog_styles.css';
+
 
 
 interface CartProps {
@@ -18,14 +20,39 @@ interface CartProps {
 const Cart: FC<CartProps> = ({ user, cart, deleteFromCart }) => {
 
     const [itemsPrice, setItemsPrice] = useState<number>(0);
+    const [itemsAmount, setItemsAmount] = useState<Map<number | string, number>>(new Map());
 
     useEffect(() => {
         let itemsPrice = 0;
         cart.forEach((item) => {
-            itemsPrice += parseInt(item.item_price.replaceAll(' ', ''));
+            if (!itemsAmount.has(item.item_id)) {
+                setItemsAmount(itemsAmount => itemsAmount.set(item.item_id, 1));
+            }
+            else {
+                const value = (itemsAmount.get(item.item_id) ?? 0) + 1;
+                deleteFromCart(item);
+                updateAmount(item.item_id, value);
+            }
+            itemsPrice += parseInt(item.item_price.replaceAll(' ', '')) * (itemsAmount.get(item.item_id) ?? 1);
         })
         setItemsPrice(itemsPrice);
-    }, [cart]);
+    }, [cart, itemsAmount]);
+
+    const updateAmount = (item_id: number | string, value: number) => {
+        if (value < 1) {
+            const removableItem: Item | undefined = cart.find(item => item.item_id === item_id);
+            if (removableItem !== undefined) {
+                deleteFromCart(removableItem);
+            }
+        }
+
+        setItemsAmount(itemsAmount => {
+            const updatedItems: Map<number | string, number> = new Map(itemsAmount);
+            updatedItems.set(item_id, value);
+            return updatedItems;
+        }
+        );
+    }
 
     return (
         <div className='cart-block'>
@@ -33,8 +60,12 @@ const Cart: FC<CartProps> = ({ user, cart, deleteFromCart }) => {
                 <h1>Корзина</h1>
             </div>
             <div className='catalog-content'>
-                {cart.map((item) => {
-                    return (<CartElement key={item.item_id} item={item} type='cart' onButtonClick={deleteFromCart}></CartElement>)
+                {cart.map((item, index) => {
+                    return (
+                        <div>
+                            <CartElement key={item.item_id} item={item} type='cart' onButtonClick={deleteFromCart}></CartElement>
+                            <Counter key={item.item_id} valueKey={item.item_id} value={itemsAmount.get(item.item_id) ?? 1} onChange={updateAmount}></Counter>
+                        </div>)
                 })}
             </div>
             <div className='cart-buy'>

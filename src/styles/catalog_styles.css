@@ -150,51 +150,6 @@
     transition: background-image 0.4s;
 }
 
-.catalog-pagination {
-    display: flex;
-    margin-top: 12px;
-    justify-content: center;
-    align-items: center;
-    gap: 2em;
-
-}
-
-.catalog-pagination-left,
-.catalog-pagination-right {
-    width: 48px;
-    height: 48px;
-    border: 0;
-    border-radius: 8px;
-    background-size: 36px;
-    background-repeat: no-repeat;
-    background-color: var(--white-color);
-    background-position: center;
-}
-
-.catalog-pagination-left {
-    background-image: url(../../public/img/arrow_left.png);
-    transition: background-image 0.4s;
-}
-
-.catalog-pagination-right {
-    background-image: url(../../public/img/arrow_right.png);
-    transition: background-image 0.4s;
-}
-
-.catalog-pagination-left:hover {
-    background-image: url(../../public/img/arrow_left_dns.png);
-    transition: background-image 0.4s;
-}
-
-.catalog-pagination-right:hover {
-    background-image: url(../../public/img/arrow_right_dns.png);
-    transition: background-image 0.4s;
-}
-
-.catalog-pagination-current {
-    font-size: 1.2em;
-}
-
 .search-result {
     width: 100%;
     margin-bottom: 16px;
