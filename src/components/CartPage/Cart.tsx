@@ -14,41 +14,13 @@ import '../../styles/catalog_styles.css';
 interface CartProps {
     user: User,
     cart: Item[],
+    addToCart: (item: Item) => void,
     deleteFromCart: (item: Item) => void
 }
 
-const Cart: FC<CartProps> = ({ user, cart, deleteFromCart }) => {
+const Cart: FC<CartProps> = ({ user, cart, addToCart, deleteFromCart }) => {
 
     const [itemsPrice, setItemsPrice] = useState<number>(0);
-    const [itemsAmount, setItemsAmount] = useState<Map<number | string, number>>(new Map());
-
-    useEffect(() => {
-        let itemsPrice = 0;
-        cart.forEach((item) => {
-            if (!itemsAmount.has(item.item_id)) {
-                setItemsAmount(itemsAmount => itemsAmount.set(item.item_id, 1));
-            }
-
-            itemsPrice += parseInt(item.item_price.replaceAll(' ', '')) * (itemsAmount.get(item.item_id) ?? 1);
-        })
-        setItemsPrice(itemsPrice);
-    }, [cart, itemsAmount]);
-
-    const updateAmount = (item_id: number | string, value: number) => { // Нарушение SRP
-        if (value < 1) {
-            const removableItem: Item | undefined = cart.find(item => item.item_id === item_id);
-            if (removableItem !== undefined) {
-                deleteFromCart(removableItem);
-            }
-        }
-
-        setItemsAmount(itemsAmount => {
-            const updatedItems: Map<number | string, number> = new Map(itemsAmount);
-            updatedItems.set(item_id, value);
-            return updatedItems;
-        }
-        );
-    }
 
     return (
         <div className='cart-block'>
@@ -58,7 +30,7 @@ const Cart: FC<CartProps> = ({ user, cart, deleteFromCart }) => {
                     return (
                         <div>
                             <CartElement key={item.item_id} item={item} type='cart' onButtonClick={deleteFromCart}></CartElement>
-                            <Counter key={item.item_id} valueKey={item.item_id} value={itemsAmount.get(item.item_id) ?? 1} onChange={updateAmount}></Counter>
+                            <Counter key={index} ></Counter>
                         </div>)
                 })}
             </div>

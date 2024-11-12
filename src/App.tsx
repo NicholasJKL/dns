@@ -31,6 +31,9 @@ function App() {
   const [cart, setCart] = useState<Item[]>([]);
 
   const addToCart = (newItem: Item) => {
+    if (cart.filter(item => item.item_id === newItem.item_id).length > 1) {
+      
+    }
     setCart([...cart, newItem]);
   }
 
@@ -51,7 +54,7 @@ function App() {
           <Route path='/registration' element={<Registration />}></Route>
           <Route path='/item' element={<Product item_id={''} />}></Route>
           <Route path='/profile' element={<Profile user={user} orders={[]} />}></Route>
-          <Route path='/cart' element={<Cart user={user} cart={cart} deleteFromCart={deleteFromCart} />}></Route>
+          <Route path='/cart' element={<Cart user={user} cart={cart} addToCart={addToCart} deleteFromCart={deleteFromCart} />}></Route>
         </Routes>
       </main>
       <Footer></Footer>
