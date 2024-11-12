@@ -28,17 +28,13 @@ const Cart: FC<CartProps> = ({ user, cart, deleteFromCart }) => {
             if (!itemsAmount.has(item.item_id)) {
                 setItemsAmount(itemsAmount => itemsAmount.set(item.item_id, 1));
             }
-            else {
-                const value = (itemsAmount.get(item.item_id) ?? 0) + 1;
-                deleteFromCart(item);
-                updateAmount(item.item_id, value);
-            }
+
             itemsPrice += parseInt(item.item_price.replaceAll(' ', '')) * (itemsAmount.get(item.item_id) ?? 1);
         })
         setItemsPrice(itemsPrice);
     }, [cart, itemsAmount]);
 
-    const updateAmount = (item_id: number | string, value: number) => {
+    const updateAmount = (item_id: number | string, value: number) => { // Нарушение SRP
         if (value < 1) {
             const removableItem: Item | undefined = cart.find(item => item.item_id === item_id);
             if (removableItem !== undefined) {
@@ -56,9 +52,7 @@ const Cart: FC<CartProps> = ({ user, cart, deleteFromCart }) => {
 
     return (
         <div className='cart-block'>
-            <div className='cart-header'>
-                <h1>Корзина</h1>
-            </div>
+
             <div className='catalog-content'>
                 {cart.map((item, index) => {
                     return (
@@ -69,7 +63,18 @@ const Cart: FC<CartProps> = ({ user, cart, deleteFromCart }) => {
                 })}
             </div>
             <div className='cart-buy'>
-                <p><b>Итого: {itemsPrice}</b></p>
+                <form action="" className='cart-form'>
+                    <label>Номер телефона</label>
+                    <input type="phone" required />
+                    <label>Адрес</label>
+                    <input type="text" required />
+                    <div className='cart-order'>
+                        <p><b>Итого: {itemsPrice} ₽</b></p>
+                        <button>Заказать</button>
+                    </div>
+                </form>
+
+
             </div>
         </div>
     );

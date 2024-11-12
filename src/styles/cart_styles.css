@@ -9,3 +9,35 @@
 .cart-element button:hover {
     background-image: url(../../public/img/close_dns.png);
 }
+
+.cart-block {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 8px;
+}
+
+.cart-buy {
+    width: 360px;
+    margin-left: auto;
+    padding: 24px;
+    border-radius: 8px;
+    background-color: var(--white-color);
+}
+
+.cart-form {
+    display: flex;
+    position: sticky;
+    top: 124px;
+    flex-direction: column;
+}
+
+.cart-order {
+    display: flex;
+    height: fit-content;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cart-order p {
+    font-size: 20px;
+}

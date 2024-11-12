@@ -24,18 +24,6 @@
     background-color: var(--white-color);
 }
 
-.about-feedback input,
-select,
-textarea {
-    margin-bottom: 16px;
-    font-size: 1em;
-    outline: 0;
-    padding: 8px;
-    border: 0;
-    border-radius: 4px;
-    background-color: var(--neutral-color);
-}
-
 .about-feedback h2 {
     margin-bottom: 24px;
     text-align: center;
