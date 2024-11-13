@@ -23,7 +23,6 @@ const ProductElement: FC<ProductElementProps> = ({ item, type, onButtonClick }) 
     }
 
     const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
         onButtonClick(item);
     }
 

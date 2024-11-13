@@ -20,17 +20,14 @@ interface CartProps {
 
 const Cart: FC<CartProps> = ({ user, cart, addToCart, deleteFromCart }) => {
 
-    const [itemsPrice, setItemsPrice] = useState<number>(0);
-
     return (
         <div className='cart-block'>
-
             <div className='catalog-content'>
-                {cart.map((item, index) => {
+                {cart.map((item) => {
                     return (
-                        <div>
-                            <CartElement key={item.item_id} item={item} type='cart' onButtonClick={deleteFromCart}></CartElement>
-                            <Counter key={index} ></Counter>
+                        <div key={item.item_id}>
+                            <CartElement item={item} type='cart' onButtonClick={deleteFromCart}></CartElement>
+                            <Counter ></Counter>
                         </div>)
                 })}
             </div>
@@ -41,7 +38,7 @@ const Cart: FC<CartProps> = ({ user, cart, addToCart, deleteFromCart }) => {
                     <label>Адрес</label>
                     <input type="text" required />
                     <div className='cart-order'>
-                        <p><b>Итого: {itemsPrice} ₽</b></p>
+                        <p><b>Итого: 0 ₽</b></p>
                         <button>Заказать</button>
                     </div>
                 </form>
