@@ -15,10 +15,25 @@ interface CartProps {
     user: User,
     cart: Item[],
     addToCart: (item: Item) => void,
-    deleteFromCart: (item: Item) => void
+    deleteFromCart: (item: Item) => void,
+    updateItemAmount: (item_id: number | string, value: number) => void
 }
 
-const Cart: FC<CartProps> = ({ user, cart, addToCart, deleteFromCart }) => {
+const Cart: FC<CartProps> = ({ user, cart, addToCart, deleteFromCart, updateItemAmount }) => {
+
+    const [totalValue, setTotalValue] = useState<number>(0);
+
+    useEffect(() => {
+        let total: number = 0;
+
+        cart.forEach(item => {
+            total = (item.item_price + total)*(item.item_cart_amount ?? 1);
+        });
+
+        setTotalValue(total);
+    }, [cart]);
+
+
 
     return (
         <div className='cart-block'>
@@ -27,7 +42,7 @@ const Cart: FC<CartProps> = ({ user, cart, addToCart, deleteFromCart }) => {
                     return (
                         <div key={item.item_id}>
                             <CartElement item={item} type='cart' onButtonClick={deleteFromCart}></CartElement>
-                            <Counter ></Counter>
+                            <Counter item={item} itemCartAmount={item.item_cart_amount} updateAmount={updateItemAmount} deleteItem={deleteFromCart}></Counter>
                         </div>)
                 })}
             </div>
@@ -38,7 +53,7 @@ const Cart: FC<CartProps> = ({ user, cart, addToCart, deleteFromCart }) => {
                     <label>Адрес</label>
                     <input type="text" required />
                     <div className='cart-order'>
-                        <p><b>Итого: 0 ₽</b></p>
+                        <p><b>Итого: {totalValue} ₽</b></p>
                         <button>Заказать</button>
                     </div>
                 </form>

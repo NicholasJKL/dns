@@ -1,4 +1,5 @@
-import React, { FC, useState, ChangeEvent, FormEvent } from 'react';
+import React, { FC, useState, MouseEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import User from '../../models/User';
 
@@ -7,13 +8,27 @@ import '../../styles/profile_styles.css';
 
 
 interface ProfileProps {
-    user: User
+    user: User,
+    setUser: (user: User) => void,
     orders: []
 }
 
-const Profile: FC<ProfileProps> = ({ user, orders }) => {
+const Profile: FC<ProfileProps> = ({ user, setUser, orders }) => {
+    const navigate = useNavigate();
 
-
+    const handleExit = (e: MouseEvent<HTMLButtonElement>) => {
+        let result: boolean = window.confirm('Вы действительно хотите выйти из аккаунта?');
+        if (result) {
+            setUser({
+                user_id: '',
+                user_email: '',
+                user_name: '',
+                user_password: '',
+                user_phone: ''
+            });
+            navigate('/');
+        }
+    }
 
     return (
         <div>
@@ -23,7 +38,7 @@ const Profile: FC<ProfileProps> = ({ user, orders }) => {
                 <p>Почта: {user.user_email}</p>
                 <p>Имя: {user.user_name}</p>
                 <p>Телефон: {user.user_phone}</p>
-                <button>Выйти из аккаунта</button>
+                <button onClick={handleExit}>Выйти из аккаунта</button>
             </div>
             <div className='profile-data profile-orders'>
                 <h1>История заказов</h1>

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import User from '../../models/User';
@@ -13,6 +13,10 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = ({ user }) => {
 
   const [isActive, setIsActive] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log(user);
+  }, [user])
 
   const handleClick = () => {
     setIsActive(!isActive);
@@ -32,7 +36,7 @@ const Header: FC<HeaderProps> = ({ user }) => {
           <NavLink to='/about' className={({ isActive }) => isActive ? 'link link-active' : 'link'} onClick={handleLinkClick}><li>О нас</li></NavLink>
           <NavLink to='/catalog' className={({ isActive }) => isActive ? 'link link-active' : 'link'} onClick={handleLinkClick}><li>Каталог</li></NavLink>
           <NavLink to='/contacts' className={({ isActive }) => isActive ? 'link link-active' : 'link'} onClick={handleLinkClick}><li>Контакты</li></NavLink>
-          {(user.user_id.toString().length === 0) ?
+          {(!user.user_id) ?
             <>
               <NavLink to='/auth' className={({ isActive }) => isActive ? 'link link-active' : 'link'} onClick={handleLinkClick}><li>Вход</li></NavLink>
               <NavLink to='/registration' className={({ isActive }) => isActive ? 'link link-active' : 'link'} onClick={handleLinkClick}><li>Регистрация</li></NavLink>

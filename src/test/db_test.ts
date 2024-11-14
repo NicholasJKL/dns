@@ -62,7 +62,6 @@ const createUserDb = async (user: User): Promise<any> => {
         Users.firstWhere(user => user.user_email == ${user.user_email})`
         const responseSameUser = await client.query(sameUser);
 
-
         if (responseSameUser.data !== null) {
             console.log(responseSameUser.data)
             throw (new UserExistError('Пользователь с такой почтой уже существует'));
@@ -73,9 +72,11 @@ const createUserDb = async (user: User): Promise<any> => {
             user_email: ${user.user_email},
             user_password: ${user.user_password},
             user_name: "-",
-            user_phone: "-"
+            user_phone: "-",
+            user_address: "-"
         })`;
         const response = await client.query(query);
+        console.log(response.data);
         return response.data;
     }
     catch (error) {
@@ -92,7 +93,6 @@ const getUserDb = async (params: User): Promise<User> => {
 
     const query = fql`
     Users.firstWhere(user => user.user_email == ${params.user_email})`;
-
     const response = await client.query(query);
 
     if (response.data === null) {
@@ -102,7 +102,7 @@ const getUserDb = async (params: User): Promise<User> => {
     else if (response.data.user_password === params.user_password) {
         return response.data;
     }
-    
+
     throw new Error(`Ошибка авторизации`);
 }
 

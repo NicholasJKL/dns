@@ -18,7 +18,7 @@ const Product: FC<ProductProps> = ({ item_id}) => {
     const { state } = useLocation();
     item_id = state.item_id;
 
-    const [item, setItem] = useState<Item>({ item_id: item_id, item_name: '', item_price: '', image_path: '' });
+    const [item, setItem] = useState<Item>({ item_id: item_id, item_name: '', item_price: 0, image_path: '' });
 
     useEffect(() => {
         getItemById(item_id)
