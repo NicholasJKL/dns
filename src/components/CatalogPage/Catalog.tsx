@@ -39,7 +39,7 @@ const Catalog: FC<CatalogProps> = ({ addToCart }) => {
 
     useEffect(() => {
         setItems([]);
-        /*
+        
         if (searched.length === 0) {
             getAllItems().then(queryObject => {
                 if (queryObject !== undefined && queryObject !== null)
@@ -52,7 +52,7 @@ const Catalog: FC<CatalogProps> = ({ addToCart }) => {
                     setItemsFromQuery(queryObject);
             });
         }
-        */
+        
         setItems([
             { item_id: 0, item_name: 'iPhone 6', item_price: 19999, image_path: 'img/iphone6-item.jpg' },
             { item_id: 1, item_name: 'iPhone SE', item_price: 14999, image_path: 'img/iphoneSE-item.jpg' },

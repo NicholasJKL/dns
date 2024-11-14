@@ -1,5 +1,6 @@
-import { getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb, getUserDb } from './test/db_test'
+import { getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb, getUserDb, getAllOrdersDb, createOrderDb } from './test/db_test'
 import User from './models/User';
+import Order from './models/Order';
 
 const getAllItems = async (): Promise<any> => {
 
@@ -93,6 +94,26 @@ const getUser = async (user: User) => {
     }
 }
 
+const getAllOrders = async (user: User) => {
+    try {
+        const queryObject = getAllOrdersDb(user);
+        return queryObject;
+    }
+    catch {
+        console.error(`Failed to get orders`);
+    }
+}
+
+const createOrder = async (order: Order) => {
+    try {
+        const queryObject = createOrderDb(order);
+        return queryObject;
+    }
+    catch {
+        console.error(`Failed to create order`);
+    }
+}
 
 
-export { getAllItems, getItemById, getSearchingItems, createUser, getUser };
+
+export { getAllItems, getItemById, getSearchingItems, createUser, getUser, getAllOrders, createOrder };

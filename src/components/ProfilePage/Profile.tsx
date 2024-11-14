@@ -1,7 +1,10 @@
-import React, { FC, useState, MouseEvent } from 'react';
+import React, { FC, useState, MouseEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import User from '../../models/User';
+import Order from '../../models/Order';
+
+import { getAllOrders } from '../../requests';
 
 import '../../styles/common_styles.css';
 import '../../styles/profile_styles.css';
@@ -10,11 +13,18 @@ import '../../styles/profile_styles.css';
 interface ProfileProps {
     user: User,
     setUser: (user: User) => void,
-    orders: []
 }
 
-const Profile: FC<ProfileProps> = ({ user, setUser, orders }) => {
+const Profile: FC<ProfileProps> = ({ user, setUser }) => {
     const navigate = useNavigate();
+    const [orders, setOrders] = useState<Order[]>([]);
+
+    useEffect(() => {
+        const queryObject = getAllOrders(user)
+        .then(orders => console.log(orders))
+        .catch(error => console.log(error));
+        
+    }, [user]);
 
     const handleExit = (e: MouseEvent<HTMLButtonElement>) => {
         let result: boolean = window.confirm('Вы действительно хотите выйти из аккаунта?');
@@ -32,12 +42,12 @@ const Profile: FC<ProfileProps> = ({ user, setUser, orders }) => {
 
     return (
         <div>
-
             <div className='profile-data'>
                 <h1>Информация о пользователе</h1>
                 <p>Почта: {user.user_email}</p>
                 <p>Имя: {user.user_name}</p>
                 <p>Телефон: {user.user_phone}</p>
+                <p>Адрес: {user.user_address}</p>
                 <button onClick={handleExit}>Выйти из аккаунта</button>
             </div>
             <div className='profile-data profile-orders'>

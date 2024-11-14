@@ -29,7 +29,14 @@ function App() {
         user_address: ''
     };
 
-    const [user, setUser] = useState<User>(unregisteredUser);
+    const [user, setUser] = useState<User>(() => {
+        const loadedUserJson = localStorage.getItem('user');
+        if (loadedUserJson) {
+            return JSON.parse(loadedUserJson);
+        }
+        return unregisteredUser;
+    });
+
     const [cart, setCart] = useState<Item[]>(() => {
         const loadedCartJson = localStorage.getItem('savedCart');
         if (loadedCartJson) {
@@ -42,7 +49,9 @@ function App() {
         localStorage.setItem('savedCart', JSON.stringify(cart));
     }, [cart]);
 
-
+    useEffect(() => {
+        localStorage.setItem('user', JSON.stringify(user));
+    }, [user]);
 
     const addToCart = (newItem: Item, amount: number = 1) => {
         if (cart.filter(item => item.item_id === newItem.item_id).length > 0) {
@@ -96,9 +105,9 @@ function App() {
                     <Route path='/auth' element={<Auth setUser={updateUser} />}></Route>
                     <Route path='/registration' element={<Registration />}></Route>
                     <Route path='/item' element={<Product item_id={''} />}></Route>
-                    <Route path='/profile' element={<Profile user={user} setUser={setUser} orders={[]} />}></Route>
+                    <Route path='/profile' element={<Profile user={user} setUser={setUser} />}></Route>
                     <Route path='/test' element={<Test></Test>}></Route>
-                    <Route path='/cart' element={<Cart user={user} cart={cart} addToCart={addToCart} deleteFromCart={deleteFromCart} updateItemAmount={updateItemAmount} />}></Route>
+                    <Route path='/cart' element={<Cart user={user} cart={cart} setCart={setCart} deleteFromCart={deleteFromCart} updateItemAmount={updateItemAmount} />}></Route>
                 </Routes>
             </main>
             <Footer></Footer>

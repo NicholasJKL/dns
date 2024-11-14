@@ -1,4 +1,5 @@
 import React, { FC, useState, ChangeEvent, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getUser } from '../../requests';
 
 import User from '../../models/User';
@@ -14,6 +15,7 @@ interface AuthProps {
 const Auth: FC<AuthProps> = ({ setUser }) => {
 
     const [userData, setUserData] = useState<User>({ user_id: '', user_email: '', user_name: '', user_password: '', user_phone: '' });
+    const navigate = useNavigate();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -29,6 +31,7 @@ const Auth: FC<AuthProps> = ({ setUser }) => {
             .then(user => {
                 setUser(user);
                 alert('Успешный вход');
+                navigate('/profile');
             })
             .catch(error => alert(error.message));
     }
