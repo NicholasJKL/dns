@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState, FormEvent } from 'react';
+import { createOrderDb } from '../../test/db_test';
 
 import User from '../../models/User';
 import Item from '../../models/Item';
@@ -9,9 +10,6 @@ import Counter from '../Common/Counter';
 import '../../styles/common_styles.css';
 import '../../styles/cart_styles.css';
 import '../../styles/catalog_styles.css';
-import { StringMappingType } from 'typescript';
-import { createOrderDb } from '../../test/db_test';
-
 
 
 interface CartProps {
@@ -24,19 +22,19 @@ interface CartProps {
 
 const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAmount }) => {
 
-    const [totalValue, setTotalValue] = useState<number>(0);
-
-    const [order, setOrder] = useState<Order>({
+    const initOrder: Order = {
         order_id: '',
         user_id: user.user_id,
         items_id: [],
         items_amount: new Map<number | string, number>(),
-        order_price: totalValue,
+        order_price: 0,
         order_phone: '',
         order_address: '',
-        order_status: '',
+        order_status: 'created',
         order_created_at: new Date()
-    });
+    }
+
+    const [order, setOrder] = useState<Order>(initOrder);
 
     useEffect(() => {
         let total: number = 0;
@@ -45,8 +43,20 @@ const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAm
             total = (item.item_price + total) * (item.item_cart_amount ?? 1);
         });
 
-        setTotalValue(total);
-    }, [cart]);
+        setOrder(newOrder => {
+            
+            newOrder.items_id= cart.map(item => {
+                return String(item.item_id);
+            });
+            newOrder.items_amount = new Map(cart.map(item => {
+                return [item.item_id, item.item_cart_amount ?? 1];
+            }));
+            newOrder.order_price = total;
+            newOrder.order_status =  'created';
+            newOrder.order_created_at = new Date();
+            return newOrder;
+        });
+    }, [order, cart]);
 
     const handleChange = (e: FormEvent<HTMLInputElement>) => {
         const { name, value } = e.currentTarget;
@@ -59,33 +69,13 @@ const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAm
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (cart.length > 0 && order.order_address.length > 0 && order.order_phone.length > 0) {
-
-            const newItemsAmount = new Map(cart.map(item => {
-                return [item.item_id, item.item_cart_amount ?? 1];
-            }));
-
-            const newItemsId = cart.map(item => {
-                return String(item.item_id);
-            });
-
-            setOrder({
-                ...order,
-                user_id: user.user_id,
-                items_id: newItemsId,
-                items_amount: newItemsAmount,
-                order_price: totalValue,
-                order_status: 'created',
-                order_created_at: new Date()
-            });
-            const queryObject = createOrderDb(order)
+            createOrderDb(order)
                 .then(() => {
                     alert(`Заказ создан`)
                     localStorage.removeItem('savedCart');
                     setCart([]);
                 })
                 .catch(() => alert(`Ошибка при создании заказа. Попробуйте позже`));
-                console.log(queryObject);
-
         }
         else {
             alert(`Заказ не создан. Убедитесь, что корзина не пуста и необходимые поля заполнены`);
@@ -110,7 +100,7 @@ const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAm
                     <label>Адрес</label>
                     <input name='order_address' type="text" onChange={handleChange} required />
                     <div className='cart-order'>
-                        <p><b>Итого: {totalValue} ₽</b></p>
+                        <p><b>Итого: {order.order_price} ₽</b></p>
                         <button>Заказать</button>
                     </div>
                 </form>
