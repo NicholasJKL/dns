@@ -23,14 +23,14 @@ interface CartProps {
 const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAmount }) => {
 
     const initOrder: Order = {
-        order_id: '',
+        id: '',
         user_id: user.user_id,
         items_id: [],
         items_amount: new Map<number | string, number>(),
         order_price: 0,
         order_phone: '',
         order_address: '',
-        order_status: 'created',
+        order_status: 'создан',
         order_created_at: new Date()
     }
 
@@ -52,7 +52,7 @@ const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAm
                 return [item.item_id, item.item_cart_amount ?? 1];
             }));
             newOrder.order_price = total;
-            newOrder.order_status =  'created';
+            newOrder.order_status =  'создан';
             newOrder.order_created_at = new Date();
             return newOrder;
         });
@@ -104,7 +104,6 @@ const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAm
                         <button>Заказать</button>
                     </div>
                 </form>
-
 
             </div>
         </div>

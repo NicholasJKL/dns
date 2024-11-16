@@ -15,7 +15,6 @@ const Header: FC<HeaderProps> = ({ user }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(user);
   }, [user])
 
   const handleClick = () => {

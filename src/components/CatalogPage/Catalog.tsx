@@ -1,6 +1,7 @@
 import React, { FC, useState, useRef, useEffect, ChangeEvent, MouseEvent, FormEvent } from 'react';
 
 import CatalogElement from '../Common/ProductElement';
+import Notification from './Notification';
 import Item from '../../models/Item';
 import ItemDb from '../../models/ItemDb';
 
@@ -22,6 +23,7 @@ const Catalog: FC<CatalogProps> = ({ addToCart }) => {
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const [searchValue, setSearchValue] = useState<string>('');
     const [searched, setSearched] = useState<string>('');
+    const [notifications, setNotifications] = useState<string[]>([]);
     const search = useRef<HTMLFormElement>(null);
 
     const setItemsFromQuery = (queryObject: { data: ItemDb[] }) => {
@@ -39,7 +41,7 @@ const Catalog: FC<CatalogProps> = ({ addToCart }) => {
 
     useEffect(() => {
         setItems([]);
-        
+
         if (searched.length === 0) {
             getAllItems().then(queryObject => {
                 if (queryObject !== undefined && queryObject !== null)
@@ -52,7 +54,7 @@ const Catalog: FC<CatalogProps> = ({ addToCart }) => {
                     setItemsFromQuery(queryObject);
             });
         }
-        
+        /* 
         setItems([
             { item_id: 0, item_name: 'iPhone 6', item_price: 19999, image_path: 'img/iphone6-item.jpg' },
             { item_id: 1, item_name: 'iPhone SE', item_price: 14999, image_path: 'img/iphoneSE-item.jpg' },
@@ -62,7 +64,7 @@ const Catalog: FC<CatalogProps> = ({ addToCart }) => {
             { item_id: 5, item_name: 'Huawei MateBook', item_price: 44999, image_path: 'img/huawei-matebook.jpg' },
             { item_id: 6, item_name: 'Xiaomi TV', item_price: 27999, image_path: 'img/xiaomi-tv.jpg' },
             { item_id: 7, item_name: 'MSI RTX 4060', item_price: 58499, image_path: 'img/msi-graphiccard.jpg' }]);
-
+        */
 
     }, [searched]);
 
@@ -90,7 +92,6 @@ const Catalog: FC<CatalogProps> = ({ addToCart }) => {
         else {
             setIsSearching(true);
         }
-
     }
 
     const handleClear = (e: MouseEvent<HTMLElement>) => {
@@ -118,7 +119,10 @@ const Catalog: FC<CatalogProps> = ({ addToCart }) => {
                     return (<CatalogElement key={item.item_id} item={item} type='catalog' onButtonClick={addToCart}></CatalogElement>)
                 })}
             </div>
-            
+            <div className='notification-block'>
+                <Notification message='Товар добавлен в корзину'></Notification>
+                
+            </div>
         </div>
     );
 };

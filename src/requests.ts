@@ -13,7 +13,7 @@ const getAllItems = async (): Promise<any> => {
 
     catch {
         try {
-            const queryObject = getAllItemsDb();
+            const queryObject = await getAllItemsDb();
             return queryObject;
         }
         catch {
@@ -31,7 +31,7 @@ const getItemById = async (item_id: string | number) => {
     }
     catch {
         try {
-            const queryObject = getItemByIdDb({ item_id: item_id });
+            const queryObject = await getItemByIdDb({ item_id: item_id });
             return queryObject;
         }
         catch {
@@ -49,7 +49,7 @@ const getSearchingItems = async (searchPrompt: string) => {
     }
     catch {
         try {
-            const queryObject = getSearchingItemsDb({ searchPrompt: searchPrompt });
+            const queryObject = await getSearchingItemsDb({ searchPrompt: searchPrompt });
             return queryObject;
         }
         catch {
@@ -67,7 +67,7 @@ const createUser = async (user: User) => {
     }
     catch {
         try {
-            const queryObject = createUserDb(user);
+            const queryObject = await createUserDb(user);
             return queryObject;
         }
         catch {
@@ -85,7 +85,7 @@ const getUser = async (user: User) => {
     }
     catch {
         try {
-            const queryObject = getUserDb(user);
+            const queryObject = await getUserDb(user);
             return queryObject;
         }
         catch {
@@ -96,7 +96,7 @@ const getUser = async (user: User) => {
 
 const getAllOrders = async (user: User) => {
     try {
-        const queryObject = getAllOrdersDb(user);
+        const queryObject = await getAllOrdersDb(user);
         return queryObject;
     }
     catch {
@@ -106,7 +106,7 @@ const getAllOrders = async (user: User) => {
 
 const createOrder = async (order: Order) => {
     try {
-        const queryObject = createOrderDb(order);
+        const queryObject =  await createOrderDb(order);
         return queryObject;
     }
     catch {

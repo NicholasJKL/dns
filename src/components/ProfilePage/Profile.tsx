@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import User from '../../models/User';
 import Order from '../../models/Order';
 
-import { getAllOrders } from '../../requests';
+import { getAllOrders, getItemById } from '../../requests';
+import ItemDb from '../../models/ItemDb';
 
 import '../../styles/common_styles.css';
 import '../../styles/profile_styles.css';
@@ -17,13 +18,25 @@ interface ProfileProps {
 
 const Profile: FC<ProfileProps> = ({ user, setUser }) => {
     const navigate = useNavigate();
+
     const [orders, setOrders] = useState<Order[]>([]);
+    const [items, setItems] = useState<ItemDb[]>([]);
 
     useEffect(() => {
-        const queryObject = getAllOrders(user)
-        .then(orders => console.log(orders))
-        .catch(error => console.log(error));
-        
+        let loadedItems: Set<Promise<any>> = new Set();
+        getAllOrders(user)
+            .then(loadedOrders => {
+                loadedOrders.data.forEach((order: Order) => {
+                    order.items_amount = new Map(Object.entries(order.items_amount));
+                    order.items_id.forEach(async ref => {
+                            loadedItems.add(getItemById(ref.id));
+                    })
+                })
+                Promise.all(loadedItems).then(items => setItems(items));
+                setOrders(loadedOrders.data);
+            }
+            )
+            .catch(error => console.log(error));
     }, [user]);
 
     const handleExit = (e: MouseEvent<HTMLButtonElement>) => {
@@ -52,14 +65,35 @@ const Profile: FC<ProfileProps> = ({ user, setUser }) => {
             </div>
             <div className='profile-data profile-orders'>
                 <h1>История заказов</h1>
-                <details className='profile-order'>
-                    <summary><b>Заказ 1</b></summary>
-                    Детали заказ
-                </details>
-                <details className='profile-order'>
-                    <summary><b>Заказ 2</b></summary>
-                    Детали заказ
-                </details>
+
+                {
+                    orders.map(order => {
+                        return (
+                            <details key={order.id} className='profile-order'>
+                                <summary><b>Заказ от {order.order_created_at.toString()},
+                                     Сумма: {order.order_price} ₽, Статус: {order.order_status}</b></summary>
+                                <ol>
+                                    {
+                                        order.items_id.map((ref,index) => {
+                                            const item: ItemDb | undefined = items.find(item => item.id === ref.id);
+                                            if (item !== undefined) {
+                                                const { item_name, item_price } = item;
+                                                const amount = order.items_amount.get(item.id);
+                                                if (amount !== undefined) {
+                                                    return (<li key={index}>{item_name}
+                                                        : {item_price} ₽ * {amount} = {item_price * amount} ₽</li>);
+                                                }
+                                            }
+                                            return <li key={index}>Загрузка...</li>;
+                                        })
+                                    }
+                                </ol>
+                            </details>
+                        )
+                    })
+
+                }
+
             </div>
         </div>
 

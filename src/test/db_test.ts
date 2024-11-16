@@ -65,7 +65,6 @@ const createUserDb = async (user: User): Promise<any> => {
         const responseSameUser = await client.query(sameUser);
 
         if (responseSameUser.data !== null) {
-            console.log(responseSameUser.data)
             throw (new UserExistError('Пользователь с такой почтой уже существует'));
         }
 
@@ -78,7 +77,6 @@ const createUserDb = async (user: User): Promise<any> => {
             user_address: "-"
         })`;
         const response = await client.query(query);
-        console.log(response.data);
         return response.data;
     }
     catch (error) {
@@ -110,23 +108,27 @@ const getUserDb = async (params: { user_email: string, user_password: string }):
 
 const getAllOrdersDb = async (params: { user_id: number | string }): Promise<any> => {
     const query = fql`
-        Orders.where(order => order.user_id == ${params.user_id})`;
+        Orders.where(order => order.user_id.id == ${params.user_id})`;
     const response = await client.query(query);
     return response.data;
 }
 
 const createOrderDb = async (params: Order): Promise<any> => {
     try {
+        console.log(params.items_id.toString());
         const query = fql`
     Orders.create({
         user_id: Users.firstWhere(user => user.id == ${params.user_id}),
-        items_id: [${params.items_id.toString()}].map(item_id=>Items.firstWhere(item => item.id == item_id)),
+        items_id: ${params.items_id.toString()}.split(',').map(item_id => Items.firstWhere(item => item.id == item_id)),
         items_amount: ${Object.fromEntries(params.items_amount)},
         order_price: ${params.order_price},
         order_phone: ${params.order_phone},
         order_address: ${params.order_address},
         order_status: ${params.order_status},
-        order_created_at: ${params.order_created_at.toString()}
+        order_created_at: ${params.order_created_at.getDate().toString()}+"."+${params.order_created_at.getMonth().toString()}+
+        "."+${params.order_created_at.getFullYear().toString()}+" "+${params.order_created_at.getHours().toString()}+
+        ":"+${params.order_created_at.getMinutes().toString()}+":"+${params.order_created_at.getSeconds().toString()}
+       
         
     })`
         const response = await client.query(query);

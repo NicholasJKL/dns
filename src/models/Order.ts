@@ -1,7 +1,11 @@
+import Item from "./Item";
+
+
 type Order = {
-    order_id: number | string,
+    id: number | string,
     user_id: number | string,
-    items_id: number[] | string[],
+    items_id: any[],
+    order_items?: Item[],
     items_amount: Map<number | string, number>,
     order_price: number,
     order_phone: string,
