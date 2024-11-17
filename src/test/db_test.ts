@@ -2,6 +2,7 @@ import { Client, fql, FaunaError } from "fauna";
 
 import User from "../models/User";
 import Order from "../models/Order";
+import Feedback from "../models/Feedback";
 
 class UserExistError extends Error {
     constructor(message: string) {
@@ -115,7 +116,6 @@ const getAllOrdersDb = async (params: { user_id: number | string }): Promise<any
 
 const createOrderDb = async (params: Order): Promise<any> => {
     try {
-        console.log(params.items_id.toString());
         const query = fql`
     Orders.create({
         user_id: Users.firstWhere(user => user.id == ${params.user_id}),
@@ -127,12 +127,34 @@ const createOrderDb = async (params: Order): Promise<any> => {
         order_status: ${params.order_status},
         order_created_at: ${params.order_created_at.getDate().toString()}+"."+${params.order_created_at.getMonth().toString()}+
         "."+${params.order_created_at.getFullYear().toString()}+" "+${params.order_created_at.getHours().toString()}+
-        ":"+${params.order_created_at.getMinutes().toString()}+":"+${params.order_created_at.getSeconds().toString()}
-       
-        
-    })`
+        ":"+${params.order_created_at.getMinutes().toString()}+":"+${params.order_created_at.getSeconds().toString()}    
+        })`
         const response = await client.query(query);
 
+        return response.data
+    }
+    catch (error) {
+        if (error instanceof FaunaError) {
+            console.error(error);
+        }
+        throw new Error();
+    }
+}
+
+const createFeedbackDb = async (params: Feedback): Promise<any> => {
+    try {
+        const query = fql`
+        Feedback.create({
+        user_id: ${params.user_id},
+        user_name: ${params.user_name},
+        user_email: ${params.user_email},
+        user_phone: ${params.user_phone},
+        section: ${params.section},
+        type: ${params.type},
+        keep_in_touch: ${params.keep_in_touch},
+        text: ${params.text}
+        })`
+        const response = await client.query(query);
         return response.data
     }
     catch (error) {
@@ -146,4 +168,4 @@ const createOrderDb = async (params: Order): Promise<any> => {
 
 
 
-export { getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb, getUserDb, getAllOrdersDb, createOrderDb };
+export { getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb, getUserDb, getAllOrdersDb, createOrderDb, createFeedbackDb };

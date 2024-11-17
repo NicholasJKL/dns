@@ -96,7 +96,7 @@ const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAm
             <div className='cart-buy'>
                 <form action='submit' className='cart-form' onSubmit={handleSubmit}>
                     <label>Номер телефона</label>
-                    <input name='order_phone' type="phone" onChange={handleChange} required />
+                    <input name='order_phone' type="tel" onChange={handleChange} required />
                     <label>Адрес</label>
                     <input name='order_address' type="text" onChange={handleChange} required />
                     <div className='cart-order'>

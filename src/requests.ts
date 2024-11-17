@@ -1,6 +1,7 @@
-import { getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb, getUserDb, getAllOrdersDb, createOrderDb } from './test/db_test'
+import { getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb, getUserDb, getAllOrdersDb, createOrderDb, createFeedbackDb } from './test/db_test'
 import User from './models/User';
 import Order from './models/Order';
+import Feedback from './models/Feedback';
 
 const getAllItems = async (): Promise<any> => {
 
@@ -106,14 +107,26 @@ const getAllOrders = async (user: User) => {
 
 const createOrder = async (order: Order) => {
     try {
-        const queryObject =  await createOrderDb(order);
+        const queryObject = await createOrderDb(order);
         return queryObject;
     }
     catch {
         console.error(`Failed to create order`);
+        throw new Error();
+    }
+}
+
+const createFeedback = async (feedback: Feedback) => {
+    try {
+        const queryObject = await createFeedbackDb(feedback);
+        return queryObject;
+    }
+    catch {
+        console.error(`Failed to create feedback`);
+        throw new Error();
     }
 }
 
 
 
-export { getAllItems, getItemById, getSearchingItems, createUser, getUser, getAllOrders, createOrder };
+export { getAllItems, getItemById, getSearchingItems, createUser, getUser, getAllOrders, createOrder, createFeedback };

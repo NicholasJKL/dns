@@ -1,10 +1,80 @@
-import React, { FC } from 'react';
+import React, { FC, useState, ChangeEvent, FormEvent } from 'react';
+import { createFeedback } from '../../requests';
+
+import Feedback from '../../models/Feedback';
+import User from '../../models/User';
 
 import '../../styles/common_styles.css';
 import '../../styles/about_styles.css';
 
 
-const About: FC = () => {
+interface AboutProps {
+    user: User
+}
+
+const About: FC<AboutProps> = ({ user }) => {
+
+    const initFeedback: Feedback = {
+        user_id: user.user_id,
+        user_name: user.user_name,
+        user_email: user.user_email,
+        user_phone: user.user_phone,
+        section: 'Товары',
+        type: '',
+        keep_in_touch: {},
+        text: ''
+    }
+
+    const [feedback, setFeedback] = useState<Feedback>(initFeedback);
+
+    const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.currentTarget;
+
+        setFeedback({
+            ...feedback,
+            [name]: value
+        });
+    }
+
+    const handleChangeSelect = (e: ChangeEvent<HTMLSelectElement>) => {
+        const { name, value } = e.currentTarget;
+
+        setFeedback({
+            ...feedback,
+            [name]: value
+        });
+    }
+
+    const handleChangeCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, checked } = e.currentTarget;
+
+        setFeedback({
+            ...feedback,
+            keep_in_touch: {
+                ...feedback.keep_in_touch,
+                [name]: checked
+            }
+        });
+    }
+
+    const handleChangeText = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        const { name, value } = e.currentTarget;
+
+        setFeedback({
+            ...feedback,
+            [name]: value
+        });
+
+    }
+
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(feedback)
+        createFeedback(feedback)
+            .then(() => alert('Отзыв отправлен!'))
+            .catch(() => alert('Ошибка при отправке отзыва. Попробуйте отправить отзыв позже!'));
+    }
+
     return (
         <div className='about-content'>
             <p><b>DNS – один из лидеров рынка по продаже цифровой и бытовой техники в России.</b></p><br />
@@ -35,16 +105,16 @@ const About: FC = () => {
                     <p> Ценим свободу, смелость и ответственность.</p>
                 </div>
             </div>
-            <form className='about-feedback'>
+            <form className='about-feedback' action='submit' onSubmit={handleSubmit}>
                 <h2>Обратная связь</h2>
                 <label>Имя</label>
-                <input maxLength={32} type="text" required />
+                <input name='user_name' maxLength={32} type="text" onChange={handleChangeInput} required />
                 <label>Почта</label>
-                <input type="email" />
+                <input name='user_email' type="email" onChange={handleChangeInput} />
                 <label>Телефон</label>
-                <input type="tel" />
+                <input name='user_phone' type="tel" onChange={handleChangeInput} />
                 <label>Раздел</label>
-                <select autoComplete='on' required>
+                <select name='section' autoComplete='on' onChange={handleChangeSelect} required>
                     <option>Товары</option>
                     <option>Заказ</option>
                     <option>Сервисный центр</option>
@@ -56,14 +126,14 @@ const About: FC = () => {
                     <option>Другое</option>
                 </select>
                 <label>Вид сообщения</label>
-                <p>&nbsp;<input name='topic' type="radio" required/>&nbsp;Отзыв</p>
-                <p>&nbsp;<input name='topic' type="radio" required/>&nbsp;Рекламация или жалоба</p>
-                <p>&nbsp;<input name='topic' type="radio" required/>&nbsp;Коммерческое предложение</p>
+                <p>&nbsp;<input name='type' type="radio" value='Отзыв' onChange={handleChangeInput} required />&nbsp;Отзыв</p>
+                <p>&nbsp;<input name='type' type="radio" value='Рекламация или жалоба' onChange={handleChangeInput} required />&nbsp;Рекламация или жалоба</p>
+                <p>&nbsp;<input name='type' type="radio" value='Коммерческое предложение' onChange={handleChangeInput} required />&nbsp;Коммерческое предложение</p>
                 <label>Поддержание связи</label>
-                <p>&nbsp;<input type="checkbox" />&nbsp;Почта</p>
-                <p>&nbsp;<input type="checkbox" />&nbsp;Телефон</p>
+                <p>&nbsp;<input name='email' type="checkbox" onChange={handleChangeCheckbox} />&nbsp;Почта</p>
+                <p>&nbsp;<input name='phone' type="checkbox" onChange={handleChangeCheckbox} />&nbsp;Телефон</p>
                 <label>Текст сообщения</label>
-                <textarea maxLength={1024} required></textarea>
+                <textarea name='text' maxLength={1024} onChange={handleChangeText} required></textarea>
                 <button type='submit'>Отправить</button>
             </form>
         </div>

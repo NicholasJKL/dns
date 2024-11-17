@@ -99,7 +99,7 @@ function App() {
             <main>
                 <Routes>
                     <Route path='/' element={<Main />}></Route>
-                    <Route path='/about' element={<About />}></Route>
+                    <Route path='/about' element={<About user={user} />}></Route>
                     <Route path='/catalog' element={<Catalog addToCart={addToCart} />}></Route>
                     <Route path='/contacts' element={<Contacts />}></Route>
                     <Route path='/auth' element={<Auth setUser={updateUser} />}></Route>
