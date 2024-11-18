@@ -35,16 +35,17 @@ const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAm
     }
 
     const [order, setOrder] = useState<Order>(initOrder);
+    const [totalValue, setTotalValue] = useState<number>(0);
 
     useEffect(() => {
         let total: number = 0;
 
         cart.forEach(item => {
-            total = (item.item_price + total) * (item.item_cart_amount ?? 1);
+            total = (item.item_price * (item.item_cart_amount ?? 1)) + total;
         });
+        setTotalValue(total);
 
         setOrder(newOrder => {
-            
             newOrder.items_id= cart.map(item => {
                 return String(item.item_id);
             });
@@ -55,7 +56,9 @@ const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAm
             newOrder.order_status =  'создан';
             newOrder.order_created_at = new Date();
             return newOrder;
-        });
+        }
+    );
+    console.log(order);
     }, [order, cart]);
 
     const handleChange = (e: FormEvent<HTMLInputElement>) => {
@@ -96,11 +99,11 @@ const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAm
             <div className='cart-buy'>
                 <form action='submit' className='cart-form' onSubmit={handleSubmit}>
                     <label>Номер телефона</label>
-                    <input name='order_phone' type="tel" onChange={handleChange} required />
+                    <input name='order_phone' type="tel" pattern="+[0-9]{1}([0-9]{3})-[0-9]{3}-[0-9]{2}-[0-9]{2}" onChange={handleChange} required />
                     <label>Адрес</label>
                     <input name='order_address' type="text" onChange={handleChange} required />
                     <div className='cart-order'>
-                        <p><b>Итого: {order.order_price} ₽</b></p>
+                        <p><b>Итого: {totalValue} ₽</b></p>
                         <button>Заказать</button>
                     </div>
                 </form>

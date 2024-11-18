@@ -54,13 +54,13 @@ function App() {
     }, [user]);
 
     const addToCart = (newItem: Item, amount: number = 1) => {
-        if (cart.filter(item => item.item_id === newItem.item_id).length > 0) {
-            updateItemAmount(newItem.item_id, newItem.item_cart_amount ? newItem.item_cart_amount + 1 : 1);
+        const item = cart.find(item => item.item_id === newItem.item_id)
+        if (item) {
+            updateItemAmount(newItem.item_id, item.item_cart_amount ? item.item_cart_amount + 1 : 1);
         }
         else {
             newItem.item_cart_amount = amount;
             setCart([...cart, newItem]);
-
         }
     }
 

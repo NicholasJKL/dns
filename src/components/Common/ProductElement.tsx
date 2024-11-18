@@ -10,24 +10,14 @@ import '../../styles/cart_styles.css';
 interface ProductElementProps {
     item: Item,
     type: string,
-    notificate?: (messages: string) => void,
-    denotificate?: () => void,
-    onButtonClick: (item: Item) => void
+    notify?: () => void,
+    onButtonClick: (item: Item) => void,
 }
 
 
-const ProductElement: FC<ProductElementProps> = ({ item, type, notificate, denotificate, onButtonClick }) => {
+const ProductElement: FC<ProductElementProps> = ({ item, type, notify, onButtonClick }) => {
 
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (denotificate) {
-            setTimeout(() => {
-                denotificate();
-                console.log(1)
-            }, 3000)
-        }
-    }, [])
 
     const handleClick = () => {
         navigate('/item', { state: { item_id: item.item_id } });
@@ -35,8 +25,8 @@ const ProductElement: FC<ProductElementProps> = ({ item, type, notificate, denot
 
     const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
         onButtonClick(item);
-        if (notificate)
-            notificate("Товар добавлен в корзину");
+        if (notify)
+            notify();
     }
 
     return (

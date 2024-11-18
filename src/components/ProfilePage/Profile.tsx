@@ -29,7 +29,7 @@ const Profile: FC<ProfileProps> = ({ user, setUser }) => {
                 loadedOrders.data.forEach((order: Order) => {
                     order.items_amount = new Map(Object.entries(order.items_amount));
                     order.items_id.forEach(async ref => {
-                            loadedItems.add(getItemById(ref.id));
+                        loadedItems.add(getItemById(ref.id));
                     })
                 })
                 Promise.all(loadedItems).then(items => setItems(items));
@@ -53,14 +53,33 @@ const Profile: FC<ProfileProps> = ({ user, setUser }) => {
         }
     }
 
+    const changeUserData = (e: MouseEvent<HTMLButtonElement>) => {
+        const { name } = e.currentTarget;
+        const value = prompt('Введите новое значение', '');
+        
+        if(value !== null){
+            let result: boolean = true;
+            if(name === 'user_phone'){
+                result = value.match(/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g)?.length===11;
+                console.log(result);
+            }
+            if(result){
+                setUser({
+                    ...user,
+                    [name]: value
+                });
+            }
+        }
+    }
+
     return (
         <div>
             <div className='profile-data'>
                 <h1>Информация о пользователе</h1>
                 <p>Почта: {user.user_email}</p>
-                <p>Имя: {user.user_name}</p>
-                <p>Телефон: {user.user_phone}</p>
-                <p>Адрес: {user.user_address}</p>
+                <p>Имя: {user.user_name} <button name='user_name' className='change-button' onClick={changeUserData}>Изменить</button></p>
+                <p>Телефон: {user.user_phone} <button name='user_phone' className='change-button' onClick={changeUserData}>Изменить</button></p>
+                <p>Адрес: {user.user_address} <button name='user_address' className='change-button' onClick={changeUserData}>Изменить</button></p>
                 <button onClick={handleExit}>Выйти из аккаунта</button>
             </div>
             <div className='profile-data profile-orders'>
@@ -71,10 +90,10 @@ const Profile: FC<ProfileProps> = ({ user, setUser }) => {
                         return (
                             <details key={order.id} className='profile-order'>
                                 <summary><b>Заказ от {order.order_created_at.toString()},
-                                     Сумма: {order.order_price} ₽, Статус: {order.order_status}</b></summary>
+                                    Сумма: {order.order_price} ₽, Статус: {order.order_status}</b></summary>
                                 <ol>
                                     {
-                                        order.items_id.map((ref,index) => {
+                                        order.items_id.map((ref, index) => {
                                             const item: ItemDb | undefined = items.find(item => item.id === ref.id);
                                             if (item !== undefined) {
                                                 const { item_name, item_price } = item;

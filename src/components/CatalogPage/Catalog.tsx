@@ -1,7 +1,7 @@
 import React, { FC, useState, useRef, useEffect, ChangeEvent, MouseEvent, FormEvent } from 'react';
+import { ToastContainer, toast, cssTransition, Zoom, Bounce } from 'react-toastify';
 
 import CatalogElement from '../Common/ProductElement';
-import Notification from './Notification';
 import Item from '../../models/Item';
 import ItemDb from '../../models/ItemDb';
 
@@ -9,6 +9,7 @@ import { getAllItems, getSearchingItems } from '../../requests';
 
 import '../../styles/common_styles.css';
 import '../../styles/catalog_styles.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 interface CatalogProps {
@@ -23,7 +24,6 @@ const Catalog: FC<CatalogProps> = ({ addToCart }) => {
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const [searchValue, setSearchValue] = useState<string>('');
     const [searched, setSearched] = useState<string>('');
-    const [notifications, setNotifications] = useState<string[]>([]);
     const search = useRef<HTMLFormElement>(null);
 
     const setItemsFromQuery = (queryObject: { data: ItemDb[] }) => {
@@ -100,13 +100,18 @@ const Catalog: FC<CatalogProps> = ({ addToCart }) => {
         setSearchValue('');
     }
 
-    const createNotification = (message: string) => {
-        setNotifications([...notifications, message]);
-    }
-
-    const expireNotification = () => {
-        const updatedNotifications = notifications.slice(1, notifications.length - 1);
-        setNotifications(updatedNotifications);
+    const notify = () => {
+        toast.success("Товар добавлен в корзину", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Zoom,
+        });
     }
 
     return (
@@ -125,17 +130,24 @@ const Catalog: FC<CatalogProps> = ({ addToCart }) => {
             }
             <div className='catalog-content'>
                 {items.map((item) => {
-                    return (<CatalogElement key={item.item_id} item={item} type='catalog' onButtonClick={addToCart} notificate={createNotification} denotificate={expireNotification}></CatalogElement>)
+                    return (<CatalogElement key={item.item_id} item={item} type='catalog' onButtonClick={addToCart} notify={notify}></CatalogElement>)
                 })}
             </div>
-            <div className='notification-block'>
-                {
-                    notifications.map((notification, index) => {
-                        return <Notification key={index} message='Товар добавлен в корзину'></Notification>;
-                    })
-                }
+            <ToastContainer
+               position="bottom-right"
+               autoClose={5000}
+               limit={5}
+               hideProgressBar={false}
+               newestOnTop
+               closeOnClick
+               rtl={false}
+               pauseOnFocusLoss
+               draggable
+               pauseOnHover
+               theme="light"
+               transition={Zoom}
+            />
 
-            </div>
         </div>
     );
 };
