@@ -100,6 +100,15 @@ const Catalog: FC<CatalogProps> = ({ addToCart }) => {
         setSearchValue('');
     }
 
+    const createNotification = (message: string) => {
+        setNotifications([...notifications, message]);
+    }
+
+    const expireNotification = () => {
+        const updatedNotifications = notifications.slice(1, notifications.length - 1);
+        setNotifications(updatedNotifications);
+    }
+
     return (
         <div>
             <form className='catalog-search' onSubmit={handleSubmit} ref={search}>
@@ -116,12 +125,16 @@ const Catalog: FC<CatalogProps> = ({ addToCart }) => {
             }
             <div className='catalog-content'>
                 {items.map((item) => {
-                    return (<CatalogElement key={item.item_id} item={item} type='catalog' onButtonClick={addToCart}></CatalogElement>)
+                    return (<CatalogElement key={item.item_id} item={item} type='catalog' onButtonClick={addToCart} notificate={createNotification} denotificate={expireNotification}></CatalogElement>)
                 })}
             </div>
             <div className='notification-block'>
-                <Notification message='Товар добавлен в корзину'></Notification>
-                
+                {
+                    notifications.map((notification, index) => {
+                        return <Notification key={index} message='Товар добавлен в корзину'></Notification>;
+                    })
+                }
+
             </div>
         </div>
     );

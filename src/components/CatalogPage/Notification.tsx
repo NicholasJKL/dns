@@ -9,7 +9,7 @@ interface NotificationProps {
 }
 
 const Notification: FC<NotificationProps> = ({ message }) => {
-
+    
     return (
         <div className='notification'>
             <p>{message}</p>

@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent } from 'react';
+import React, { FC, MouseEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Item from '../../models/Item';
@@ -10,13 +10,24 @@ import '../../styles/cart_styles.css';
 interface ProductElementProps {
     item: Item,
     type: string,
+    notificate?: (messages: string) => void,
+    denotificate?: () => void,
     onButtonClick: (item: Item) => void
 }
 
 
-const ProductElement: FC<ProductElementProps> = ({ item, type, onButtonClick }) => {
+const ProductElement: FC<ProductElementProps> = ({ item, type, notificate, denotificate, onButtonClick }) => {
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (denotificate) {
+            setTimeout(() => {
+                denotificate();
+                console.log(1)
+            }, 3000)
+        }
+    }, [])
 
     const handleClick = () => {
         navigate('/item', { state: { item_id: item.item_id } });
@@ -24,6 +35,8 @@ const ProductElement: FC<ProductElementProps> = ({ item, type, onButtonClick }) 
 
     const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
         onButtonClick(item);
+        if (notificate)
+            notificate("Товар добавлен в корзину");
     }
 
     return (
