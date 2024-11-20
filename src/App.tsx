@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { ToastContainer, toast, cssTransition, Zoom, Bounce } from 'react-toastify';
 
 import User from './models/User';
 import Item from './models/Item';
@@ -12,10 +13,12 @@ import Contacts from './components/ContactsPage/Contacts';
 import Auth from './components/AuthPage/Auth';
 import Footer from './components/Common/Footer';
 import Registration from './components/RegistrationPage/Registration';
-import Product from './components/ProductPage/Product';
+import Product from './components/ItemPage/ItemView';
 import Profile from './components/ProfilePage/Profile';
 import Cart from './components/CartPage/Cart';
 import Test from './Test';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -93,6 +96,30 @@ function App() {
         }
     }
 
+    const notify = (message: string, type: string) => {
+        const toastParams: Object = {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Zoom,
+        };
+        switch (type) {
+            case 'success': {
+                toast.success(message, toastParams);
+                break;
+            }
+            case 'error': {
+                toast.error(message, toastParams);
+                break;
+            }
+        }
+    }
+
     return (
         <div>
             <Header user={user}></Header>
@@ -100,16 +127,30 @@ function App() {
                 <Routes>
                     <Route path='/' element={<Main />}></Route>
                     <Route path='/about' element={<About user={user} />}></Route>
-                    <Route path='/catalog' element={<Catalog addToCart={addToCart} />}></Route>
+                    <Route path='/catalog' element={<Catalog addToCart={addToCart} notify={notify} />}></Route>
                     <Route path='/contacts' element={<Contacts />}></Route>
                     <Route path='/auth' element={<Auth setUser={updateUser} />}></Route>
                     <Route path='/registration' element={<Registration />}></Route>
-                    <Route path='/item' element={<Product item_id={''} />}></Route>
-                    <Route path='/profile' element={<Profile user={user} setUser={setUser} />}></Route>
+                    <Route path='/item/*' element={<Product item_id={''} addToCart={addToCart} notify={notify} />}></Route>
+                    <Route path='/profile' element={<Profile user={user} setUser={setUser} notify={notify} />}></Route>
                     <Route path='/test' element={<Test></Test>}></Route>
-                    <Route path='/cart' element={<Cart user={user} cart={cart} setCart={setCart} deleteFromCart={deleteFromCart} updateItemAmount={updateItemAmount} />}></Route>
+                    <Route path='/cart' element={<Cart user={user} cart={cart} setCart={setCart} deleteFromCart={deleteFromCart} updateItemAmount={updateItemAmount} notify={notify} />}></Route>
                 </Routes>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    limit={5}
+                    hideProgressBar={false}
+                    newestOnTop
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                    transition={Zoom} />
             </main>
+
             <Footer></Footer>
         </div>
     );

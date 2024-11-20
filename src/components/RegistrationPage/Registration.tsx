@@ -15,7 +15,8 @@ const Registration: FC = () => {
         user_email: '',
         user_name: '',
         user_password: '',
-        user_phone: ''
+        user_phone: '',
+        user_address: ''
     }
 
     const [user, setUser] = useState<User>(initUser);
@@ -49,7 +50,7 @@ const Registration: FC = () => {
             .then(()=>
                 alert('Успешная регистрация'))
             .catch(
-                error => alert(error));
+                error => alert(error.message));
             
         }
         else {
@@ -67,6 +68,8 @@ const Registration: FC = () => {
                 <input name='user_password' type="password" minLength={8} maxLength={24} required onChange={handlePasswordChange} />
                 <label>Повторите пароль</label>
                 <input name='password_repeat' type="password" minLength={8} maxLength={24} required onChange={handlePasswordRepeatChange} />
+                <label><input type="checkbox" />&nbsp;Нажимая на кнопку, я даю своё согласие на обработку пресональных данных и соглашаюсь
+                с условиями <a href="/privacy_policy.pdf" target="_blank" className='link link-active'>политикой конфиденциальности</a></label>
                 <button type='submit'>Зарегистрироваться</button>
             </form>
         </div>

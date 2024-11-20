@@ -108,11 +108,12 @@ const About: FC<AboutProps> = ({ user }) => {
             <form className='about-feedback' action='submit' onSubmit={handleSubmit}>
                 <h2>Обратная связь</h2>
                 <label>Имя</label>
-                <input name='user_name' maxLength={32} type="text" onChange={handleChangeInput} required />
+                <input name='user_name' maxLength={32} type="text" onChange={handleChangeInput} 
+                defaultValue={user.user_name} required />
                 <label>Почта</label>
-                <input name='user_email' type="email" onChange={handleChangeInput} />
+                <input name='user_email' type="email" onChange={handleChangeInput} defaultValue={user.user_email} />
                 <label>Телефон</label>
-                <input name='user_phone' type="tel" onChange={handleChangeInput} />
+                <input name='user_phone' type="tel" onChange={handleChangeInput} defaultValue={user.user_phone} />
                 <label>Раздел</label>
                 <select name='section' autoComplete='on' onChange={handleChangeSelect} required>
                     <option>Товары</option>

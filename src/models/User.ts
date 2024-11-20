@@ -4,7 +4,7 @@ type User = {
     user_email: string,
     user_password: string,
     user_phone: string,
-    user_address?: string
+    user_address: string
 }
 
 export default User;

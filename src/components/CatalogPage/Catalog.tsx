@@ -1,7 +1,7 @@
 import React, { FC, useState, useRef, useEffect, ChangeEvent, MouseEvent, FormEvent } from 'react';
-import { ToastContainer, toast, cssTransition, Zoom, Bounce } from 'react-toastify';
 
-import CatalogElement from '../Common/ProductElement';
+
+import CatalogElement from '../Common/ItemElement';
 import Item from '../../models/Item';
 import ItemDb from '../../models/ItemDb';
 
@@ -9,15 +9,16 @@ import { getAllItems, getSearchingItems } from '../../requests';
 
 import '../../styles/common_styles.css';
 import '../../styles/catalog_styles.css';
-import 'react-toastify/dist/ReactToastify.css';
+
 
 
 interface CatalogProps {
-    addToCart: (newItem: Item) => void
+    addToCart: (newItem: Item) => void,
+    notify: (message: string, type: string) => void
 }
 
 
-const Catalog: FC<CatalogProps> = ({ addToCart }) => {
+const Catalog: FC<CatalogProps> = ({ addToCart, notify }) => {
 
     const [items, setItems] = useState<Item[]>([]);
     const [isActive, setActive] = useState<boolean>(false);
@@ -31,6 +32,8 @@ const Catalog: FC<CatalogProps> = ({ addToCart }) => {
             {
                 item_id: item.id,
                 item_name: item.item_name,
+                item_description: '',
+                item_props: {},
                 item_price: item.item_price,
                 image_path: item.image_path
             }
@@ -100,19 +103,7 @@ const Catalog: FC<CatalogProps> = ({ addToCart }) => {
         setSearchValue('');
     }
 
-    const notify = () => {
-        toast.success("Товар добавлен в корзину", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Zoom,
-        });
-    }
+    
 
     return (
         <div>
@@ -133,20 +124,7 @@ const Catalog: FC<CatalogProps> = ({ addToCart }) => {
                     return (<CatalogElement key={item.item_id} item={item} type='catalog' onButtonClick={addToCart} notify={notify}></CatalogElement>)
                 })}
             </div>
-            <ToastContainer
-               position="bottom-right"
-               autoClose={5000}
-               limit={5}
-               hideProgressBar={false}
-               newestOnTop
-               closeOnClick
-               rtl={false}
-               pauseOnFocusLoss
-               draggable
-               pauseOnHover
-               theme="light"
-               transition={Zoom}
-            />
+           
 
         </div>
     );

@@ -14,7 +14,16 @@ interface AuthProps {
 
 const Auth: FC<AuthProps> = ({ setUser }) => {
 
-    const [userData, setUserData] = useState<User>({ user_id: '', user_email: '', user_name: '', user_password: '', user_phone: '' });
+    const initUser: User = {
+        user_id: '',
+        user_email: '',
+        user_name: '',
+        user_password: '',
+        user_phone: '',
+        user_address: ''
+    }
+
+    const [userData, setUserData] = useState<User>(initUser);
     const navigate = useNavigate();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -1,10 +1,11 @@
-import React, { FC, useEffect, useState, FormEvent } from 'react';
-import { createOrderDb } from '../../test/db_test';
+import React, { FC, useEffect, useState, FormEvent, ChangeEvent } from 'react';
+
+import { createOrder } from '../../requests';
 
 import User from '../../models/User';
 import Item from '../../models/Item';
 import Order from '../../models/Order';
-import CartElement from '../Common/ProductElement';
+import CartElement from '../Common/ItemElement';
 import Counter from '../Common/Counter';
 
 import '../../styles/common_styles.css';
@@ -17,10 +18,11 @@ interface CartProps {
     cart: Item[],
     setCart: (item: Item[]) => void,
     deleteFromCart: (item: Item) => void,
-    updateItemAmount: (item_id: number | string, value: number) => void
+    updateItemAmount: (item_id: number | string, value: number) => void,
+    notify: (message: string, type: string) => void
 }
 
-const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAmount }) => {
+const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAmount, notify }) => {
 
     const initOrder: Order = {
         id: '',
@@ -28,8 +30,8 @@ const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAm
         items_id: [],
         items_amount: new Map<number | string, number>(),
         order_price: 0,
-        order_phone: '',
-        order_address: '',
+        order_phone: user.user_phone,
+        order_address: user.user_address,
         order_status: 'создан',
         order_created_at: new Date()
     }
@@ -46,35 +48,46 @@ const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAm
         setTotalValue(total);
 
         setOrder(newOrder => {
-            newOrder.items_id= cart.map(item => {
+            newOrder.items_id = cart.map(item => {
                 return String(item.item_id);
             });
             newOrder.items_amount = new Map(cart.map(item => {
                 return [item.item_id, item.item_cart_amount ?? 1];
             }));
             newOrder.order_price = total;
-            newOrder.order_status =  'создан';
+            newOrder.order_status = 'создан';
             newOrder.order_created_at = new Date();
             return newOrder;
         }
-    );
-    console.log(order);
+        );
     }, [order, cart]);
+
+    const validatePhone = (phone: string) => {
+        const phoneRegex = /^(\+7)\s*\((\d{3})\)\s*-?\s*(\d{3})\s*-?\s*(\d{2})\s*-?\s*(\d{2})$/;
+        if (!phoneRegex.test(phone)) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 
     const handleChange = (e: FormEvent<HTMLInputElement>) => {
         const { name, value } = e.currentTarget;
+
         setOrder({
             ...order,
             [name]: value
         });
-    }
 
+    }
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (cart.length > 0 && order.order_address.length > 0 && order.order_phone.length > 0) {
-            createOrderDb(order)
+        if (checkInput()) {
+            createOrder(order, user)
                 .then(() => {
-                    alert(`Заказ создан`)
+                    alert(`Заказ создан`);
+                    notify('Заказ создан', 'success');
                     localStorage.removeItem('savedCart');
                     setCart([]);
                 })
@@ -83,6 +96,17 @@ const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAm
         else {
             alert(`Заказ не создан. Убедитесь, что корзина не пуста и необходимые поля заполнены`);
         }
+    }
+
+    const checkInput = (): boolean => {
+        const validatePhoneResult = validatePhone(order.order_phone);
+        if (cart.length > 0 && order.order_address.length > 0 && validatePhoneResult) {
+            return true;
+        }
+        if (!validatePhoneResult) {
+            notify('Неправильно введён номер телефона', 'error');
+        }
+        return false;
     }
 
     return (
@@ -99,9 +123,10 @@ const Cart: FC<CartProps> = ({ user, cart, setCart, deleteFromCart, updateItemAm
             <div className='cart-buy'>
                 <form action='submit' className='cart-form' onSubmit={handleSubmit}>
                     <label>Номер телефона</label>
-                    <input name='order_phone' type="tel" pattern="+[0-9]{1}([0-9]{3})-[0-9]{3}-[0-9]{2}-[0-9]{2}" onChange={handleChange} required />
+                    <input name='order_phone' type="tel" placeholder="+7(XXX)-XXX-XX-XX" inputMode='tel' 
+                    onChange={handleChange} defaultValue={user.user_phone} required />
                     <label>Адрес</label>
-                    <input name='order_address' type="text" onChange={handleChange} required />
+                    <input name='order_address' type="text" onChange={handleChange} defaultValue={user.user_address} required />
                     <div className='cart-order'>
                         <p><b>Итого: {totalValue} ₽</b></p>
                         <button>Заказать</button>

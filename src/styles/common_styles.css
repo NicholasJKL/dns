@@ -110,6 +110,10 @@ textarea {
     background-color: var(--neutral-color);
 }
 
+iframe {
+    border-radius: 8px;
+}
+
 .mobile-menu {
     display: none;
     position: absolute;
@@ -136,7 +140,7 @@ textarea {
 }
 
 footer {
-    height: 20px;
+    height: 36px;
     text-align: center;
     font-size: 1.1em;
     font-weight: 600;

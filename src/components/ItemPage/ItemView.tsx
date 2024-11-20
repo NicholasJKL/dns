@@ -7,29 +7,34 @@ import { getItemById } from '../../requests';
 
 import '../../styles/common_styles.css';
 import '../../styles/item_styles.css';
+import ItemDb from '../../models/ItemDb';
 
 
 interface ProductProps {
-    item_id: string | number
+    item_id: string | number,
+    addToCart: (newItem: Item) => void,
+    notify?: (message: string, type: string) => void,
 }
 
-const Product: FC<ProductProps> = ({ item_id}) => {
+const Product: FC<ProductProps> = ({ item_id, addToCart, notify }) => {
 
     const { state } = useLocation();
     item_id = state.item_id;
 
-    const [item, setItem] = useState<Item>({ item_id: item_id, item_name: '', item_price: 0, image_path: '' });
+    const [item, setItem] = useState<Item>({ item_id: item_id, item_name: '', item_description: '', item_props: {}, item_price: 0, image_path: '' });
 
     useEffect(() => {
         getItemById(item_id)
-            .then(queryObject => {
+            .then((queryObject: ItemDb) => {
                 if (queryObject !== undefined && queryObject !== null) {
                     const loadedItem: Item = (
                         {
                             item_id: queryObject.id,
                             item_name: queryObject.item_name,
                             item_price: queryObject.item_price,
-                            image_path: queryObject.image_path
+                            item_description: queryObject.item_description,
+                            item_props: queryObject.item_props,
+                            image_path: '../' + queryObject.image_path
                         }
                     )
                     setItem(loadedItem);
@@ -37,6 +42,12 @@ const Product: FC<ProductProps> = ({ item_id}) => {
             })
             .catch(error => console.error(error));
     }, [item_id]);
+
+    const handleBuy = () => {
+        addToCart(item);
+        if(notify)
+            notify('Товар добавлен в корзину','success');
+    }
 
     return (
         <div className='item-grid'>
@@ -47,17 +58,17 @@ const Product: FC<ProductProps> = ({ item_id}) => {
                 <h2>{item.item_name}</h2>
                 <div className='item-buy-price'>
                     <p>{item.item_price} ₽</p>
-                    <button>Купить</button>
+                    <button onClick={handleBuy}>Купить</button>
                 </div>
                 <h2>Описание:</h2>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta dolorum harum tempora voluptate fuga rem eaque praesentium mollitia officiis. Perferendis animi aliquid laborum labore iure. Eligendi, non? Impedit, tempora voluptatibus!  </p>
+                <p>{item.item_description}</p>
                 <h2>Характеристики:</h2>
                 <ul>
-                    <li>Характеристика 1 - <i>значение</i></li>
-                    <li>Характеристика 2 - <i>значение</i></li>
-                    <li>Характеристика 3 - <i>значение</i></li>
-                    <li>Характеристика 4 - <i>значение</i></li>
-                    <li>Характеристика 5 - <i>значение</i></li>
+                    {
+                        Object.entries(item.item_props).map(prop => {
+                            return <li>{prop[0]} - <i>{prop[1]}</i></li>;
+                        })
+                    }
                 </ul>
             </div>
         </div>

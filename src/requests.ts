@@ -1,4 +1,5 @@
-import { getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb, getUserDb, getAllOrdersDb, createOrderDb, createFeedbackDb } from './test/db_test'
+import { getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb, 
+    getUserDb, getAllOrdersDb, createOrderDb, createFeedbackDb, updateUserDb } from './test/db_test'
 import User from './models/User';
 import Order from './models/Order';
 import Feedback from './models/Feedback';
@@ -71,8 +72,9 @@ const createUser = async (user: User) => {
             const queryObject = await createUserDb(user);
             return queryObject;
         }
-        catch {
+        catch(error) {
             console.error(`Failed to create user`);
+            throw(error);
         }
     }
 }
@@ -105,9 +107,9 @@ const getAllOrders = async (user: User) => {
     }
 }
 
-const createOrder = async (order: Order) => {
+const createOrder = async (order: Order, user: User) => {
     try {
-        const queryObject = await createOrderDb(order);
+        const queryObject = await createOrderDb(order, user);
         return queryObject;
     }
     catch {
@@ -121,12 +123,24 @@ const createFeedback = async (feedback: Feedback) => {
         const queryObject = await createFeedbackDb(feedback);
         return queryObject;
     }
-    catch {
+    catch(error) {
         console.error(`Failed to create feedback`);
-        throw new Error();
+        throw error;
+    }
+}
+
+const updateUser = async (user: User) => {
+    try {
+        const queryObject = await updateUserDb(user);
+        return queryObject;
+    }
+    catch(error) {
+        console.error(`Failed to update user`);
+        throw error;
     }
 }
 
 
 
-export { getAllItems, getItemById, getSearchingItems, createUser, getUser, getAllOrders, createOrder, createFeedback };
+export { getAllItems, getItemById, getSearchingItems, createUser, getUser, getAllOrders,
+     createOrder, createFeedback, updateUser };

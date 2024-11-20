@@ -10,23 +10,23 @@ import '../../styles/cart_styles.css';
 interface ProductElementProps {
     item: Item,
     type: string,
-    notify?: () => void,
+    notify?: (message: string, type: string) => void,
     onButtonClick: (item: Item) => void,
 }
 
 
-const ProductElement: FC<ProductElementProps> = ({ item, type, notify, onButtonClick }) => {
+const ProductElement: FC<ProductElementProps> = ({ item, type, notify, onButtonClick}) => {
 
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate('/item', { state: { item_id: item.item_id } });
+        navigate(`/item/${item.item_id}`, { state: { item_id: item.item_id} });
     }
 
     const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
         onButtonClick(item);
         if (notify)
-            notify();
+            notify('Товар добавлен в корзину','success');
     }
 
     return (
