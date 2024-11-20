@@ -33,7 +33,7 @@ function App() {
     };
 
     const [user, setUser] = useState<User>(() => {
-        const loadedUserJson = localStorage.getItem('user');    
+        const loadedUserJson = localStorage.getItem('user');
         if (loadedUserJson) {
             return JSON.parse(loadedUserJson);
         }
@@ -57,14 +57,21 @@ function App() {
     }, [user]);
 
     const addToCart = (newItem: Item, amount: number = 1) => {
-        const item = cart.find(item => item.item_id === newItem.item_id)
-        if (item) {
-            updateItemAmount(newItem.item_id, item.item_cart_amount ? item.item_cart_amount + 1 : 1);
+        if (user.user_id) {
+            const item = cart.find(item => item.item_id === newItem.item_id)
+            if (item) {
+                updateItemAmount(newItem.item_id, item.item_cart_amount ? item.item_cart_amount + 1 : 1);
+            }
+            else {
+                newItem.item_cart_amount = amount;
+                setCart([...cart, newItem]);
+            }
+            notify('Товар добавлен в корзину.','success');
         }
         else {
-            newItem.item_cart_amount = amount;
-            setCart([...cart, newItem]);
+            notify('Необходимо войти в аккаунт, прежде чем добавлять товары в корзину.', 'error');
         }
+
     }
 
     const deleteFromCart = (rmItem: Item) => {
@@ -126,7 +133,7 @@ function App() {
             <main>
                 <Routes>
                     <Route path='/' element={<Main />}></Route>
-                    <Route path='/about' element={<About user={user} notify={notify} /> } ></Route>
+                    <Route path='/about' element={<About user={user} notify={notify} />} ></Route>
                     <Route path='/catalog' element={<Catalog addToCart={addToCart} notify={notify} />}></Route>
                     <Route path='/contacts' element={<Contacts />}></Route>
                     <Route path='/auth' element={<Auth setUser={updateUser} notify={notify} />}></Route>

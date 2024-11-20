@@ -25,8 +25,6 @@ const ProductElement: FC<ProductElementProps> = ({ item, type, notify, onButtonC
 
     const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
         onButtonClick(item);
-        if (notify)
-            notify('Товар добавлен в корзину','success');
     }
 
     return (

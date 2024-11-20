@@ -41,3 +41,17 @@
 .cart-order p {
     font-size: 20px;
 }
+
+@media (max-width: 1023px) {
+    .cart-block {
+        display:flex;
+        flex-direction: column;
+    }
+    .cart-buy{
+        position: sticky;
+        margin: auto;
+        width: 60%;
+        min-width: 280px;
+        bottom: 0px;
+    }
+}

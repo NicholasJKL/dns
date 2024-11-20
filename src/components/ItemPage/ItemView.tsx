@@ -48,8 +48,6 @@ const Product: FC<ProductProps> = ({ item_id, addToCart, notify }) => {
 
     const handleBuy = () => {
         addToCart(item);
-        if(notify)
-            notify('Товар добавлен в корзину','success');
     }
 
     return (

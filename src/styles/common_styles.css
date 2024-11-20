@@ -165,7 +165,7 @@ iframe {
 }
 
 footer {
-    height: 36px;
+    height: fit-content;
     text-align: center;
     font-size: 1.1em;
     font-weight: 600;

@@ -91,8 +91,9 @@ const getUser = async (user: User) => {
             const queryObject = await getUserDb(user);
             return queryObject;
         }
-        catch {
+        catch(error) {
             console.error(`Failed to get user`);
+            throw error;
         }
     }
 }
