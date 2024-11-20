@@ -9,10 +9,11 @@ import '../../styles/about_styles.css';
 
 
 interface AboutProps {
-    user: User
+    user: User,
+    notify: (message: string, type: string) => void
 }
 
-const About: FC<AboutProps> = ({ user }) => {
+const About: FC<AboutProps> = ({ user, notify }) => {
 
     const initFeedback: Feedback = {
         user_id: user.user_id,
@@ -69,10 +70,11 @@ const About: FC<AboutProps> = ({ user }) => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(feedback)
+        e.currentTarget.reset();
+        
         createFeedback(feedback)
-            .then(() => alert('Отзыв отправлен!'))
-            .catch(() => alert('Ошибка при отправке отзыва. Попробуйте отправить отзыв позже!'));
+            .then(() => notify('Сообщение отправлено.','success'))
+            .catch(() => notify('Ошибка при отправке отзыва. Попробуйте отправить отзыв позже.','error'));
     }
 
     return (

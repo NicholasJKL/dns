@@ -25,6 +25,7 @@ const Catalog: FC<CatalogProps> = ({ addToCart, notify }) => {
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const [searchValue, setSearchValue] = useState<string>('');
     const [searched, setSearched] = useState<string>('');
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const search = useRef<HTMLFormElement>(null);
 
     const setItemsFromQuery = (queryObject: { data: ItemDb[] }) => {
@@ -39,6 +40,7 @@ const Catalog: FC<CatalogProps> = ({ addToCart, notify }) => {
             }
         )
         );
+        setIsLoading(false);
         setItems(loadedItems);
     }
 
@@ -103,7 +105,7 @@ const Catalog: FC<CatalogProps> = ({ addToCart, notify }) => {
         setSearchValue('');
     }
 
-    
+
 
     return (
         <div>
@@ -124,7 +126,8 @@ const Catalog: FC<CatalogProps> = ({ addToCart, notify }) => {
                     return (<CatalogElement key={item.item_id} item={item} type='catalog' onButtonClick={addToCart} notify={notify}></CatalogElement>)
                 })}
             </div>
-           
+
+            {isLoading && <div className='loading'></div>}
 
         </div>
     );

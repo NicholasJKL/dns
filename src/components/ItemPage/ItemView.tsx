@@ -8,6 +8,7 @@ import { getItemById } from '../../requests';
 import '../../styles/common_styles.css';
 import '../../styles/item_styles.css';
 import ItemDb from '../../models/ItemDb';
+import { Divide } from 'faunadb';
 
 
 interface ProductProps {
@@ -19,6 +20,7 @@ interface ProductProps {
 const Product: FC<ProductProps> = ({ item_id, addToCart, notify }) => {
 
     const { state } = useLocation();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     item_id = state.item_id;
 
     const [item, setItem] = useState<Item>({ item_id: item_id, item_name: '', item_description: '', item_props: {}, item_price: 0, image_path: '' });
@@ -37,6 +39,7 @@ const Product: FC<ProductProps> = ({ item_id, addToCart, notify }) => {
                             image_path: '../' + queryObject.image_path
                         }
                     )
+                    setIsLoading(false);
                     setItem(loadedItem);
                 }
             })
@@ -52,17 +55,21 @@ const Product: FC<ProductProps> = ({ item_id, addToCart, notify }) => {
     return (
         <div className='item-grid'>
             <div className='item-left-content'>
-                <img src={item.image_path} alt="Картинка" />
+            {isLoading ? <div className='loading'></div> :
+                <img src={item.image_path} alt={"Изображение"} />}
             </div>
             <div className='item-right-content'>
-                <h2>{item.item_name}</h2>
+                <h2>{item.item_name ? item.item_name : 'Название'}</h2>
+                    {isLoading ? <div className='loading'></div> : 
                 <div className='item-buy-price'>
-                    <p>{item.item_price} ₽</p>
+                    <p>{item.item_price ? item.item_price : ''}  ₽</p>
                     <button onClick={handleBuy}>Купить</button>
-                </div>
+                </div>}
                 <h2>Описание:</h2>
+                {isLoading && <div className='loading'></div> }
                 <p>{item.item_description}</p>
                 <h2>Характеристики:</h2>
+                {isLoading && <div className='loading'></div> }
                 <ul>
                     {
                         Object.entries(item.item_props).map(prop => {

@@ -9,10 +9,11 @@ import '../../styles/auth_styles.css';
 
 
 interface AuthProps {
-    setUser: (queryObject: any) => void
+    setUser: (queryObject: any) => void,
+    notify: (message: string, type: string) => void
 }
 
-const Auth: FC<AuthProps> = ({ setUser }) => {
+const Auth: FC<AuthProps> = ({ setUser, notify }) => {
 
     const initUser: User = {
         user_id: '',
@@ -39,7 +40,7 @@ const Auth: FC<AuthProps> = ({ setUser }) => {
         getUser(userData)
             .then(user => {
                 setUser(user);
-                alert('Успешный вход');
+                notify('Успешный вход.', 'success');
                 navigate('/profile');
             })
             .catch(error => alert(error.message));

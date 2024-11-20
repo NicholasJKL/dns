@@ -22,6 +22,7 @@ const Profile: FC<ProfileProps> = ({ user, setUser, notify }) => {
 
     const [orders, setOrders] = useState<Order[]>([]);
     const [items, setItems] = useState<ItemDb[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         let loadedItems: Set<Promise<any>> = new Set();
@@ -35,8 +36,9 @@ const Profile: FC<ProfileProps> = ({ user, setUser, notify }) => {
                         }
                     })
                 })
-                Promise.all(loadedItems).then(newItems => setItems(newItems));
+                setIsLoading(false);
                 setOrders(loadedOrders.data);
+                Promise.all(loadedItems).then(newItems => setItems(newItems));
             }
             )
             .catch(error => console.log(error));
@@ -98,6 +100,7 @@ const Profile: FC<ProfileProps> = ({ user, setUser, notify }) => {
             <div className='profile-data profile-orders'>
                 <h1>История заказов</h1>
                 {
+                    isLoading ? <div className='loading'></div> :
                     orders.map(order => {
                         return (
                             <details key={order.id} className='profile-order'>

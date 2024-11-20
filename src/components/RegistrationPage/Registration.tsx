@@ -1,14 +1,19 @@
 import React, { FC, useState, ChangeEvent, FormEvent } from 'react';
-import { createUser } from '../../requests';
+import { createUser, getUser } from '../../requests';
+import { useNavigate } from 'react-router-dom';
 
 import User from '../../models/User';
 
 import '../../styles/common_styles.css';
 import '../../styles/auth_styles.css';
 
-// TODO: Поменять change
 
-const Registration: FC = () => {
+interface RegistrationProps {
+    notify: (message: string, type: string) => void,
+    setUser: (queryObject: any) => void
+}
+
+const Registration: FC<RegistrationProps> = ({ notify, setUser }) => {
 
     const initUser: User = {
         user_id: '',
@@ -19,23 +24,23 @@ const Registration: FC = () => {
         user_address: ''
     }
 
-    const [user, setUser] = useState<User>(initUser);
+    const [userData, setUserData] = useState<User>(initUser);
     const [passwordRepeat, setPasswordRepeat] = useState<string>('');
+    const [ppAgreement, setPPAgreement] = useState<boolean>(false);
+    const navigate = useNavigate();
 
-    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setUser({
-            ...user,
+        setUserData({
+            ...userData,
             [name]: value
         });
     }
 
-    const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setUser({
-            ...user,
-            [name]: value
-        });
+    const handleChangeCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
+        const { checked } = e.currentTarget;
+        setPPAgreement(checked);
+
     }
 
     const handlePasswordRepeatChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -43,18 +48,33 @@ const Registration: FC = () => {
         setPasswordRepeat(value);
     }
 
+    const authUser = async (userData: User) => {
+        const user = await getUser(userData);
+        setUser(user);
+        navigate('/profile');
+    }
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (user.user_password === passwordRepeat) {
-            createUser(user)
-            .then(()=>
-                alert('Успешная регистрация'))
-            .catch(
-                error => alert(error.message));
-            
+
+        if (userData.user_password !== passwordRepeat) {
+            notify('Регистрация не завершена. Пароли не совпадают.', 'error');
         }
+
+        else if (!ppAgreement) {
+            notify('Регистрация не завершена. Подтвердите согласие на обработку персональных данных.', 'error');
+        }
+
         else {
-            alert('Пароли не совпадают. Попробуйте ещё раз')
+            createUser(userData)
+                .then(() => {
+                    notify('Успешная регистрация.', 'success');
+                    authUser(userData);
+                }
+                )
+                .catch(
+                    error => notify(`${error.message}`, 'error')
+                )
         }
     }
 
@@ -63,13 +83,13 @@ const Registration: FC = () => {
             <form className='auth-reg-form' onSubmit={handleSubmit}>
                 <h2>Регистрация</h2>
                 <label>Почта (email)</label>
-                <input name='user_email' type="email" onChange={handleEmailChange} required />
+                <input name='user_email' type="email" onChange={handleChange} required />
                 <label>Пароль (минимум 8 символов)</label>
-                <input name='user_password' type="password" minLength={8} maxLength={24} required onChange={handlePasswordChange} />
+                <input name='user_password' type="password" minLength={8} maxLength={24} required onChange={handleChange} />
                 <label>Повторите пароль</label>
                 <input name='password_repeat' type="password" minLength={8} maxLength={24} required onChange={handlePasswordRepeatChange} />
-                <label><input type="checkbox" />&nbsp;Нажимая на кнопку, я даю своё согласие на обработку пресональных данных и соглашаюсь
-                с условиями <a href="/privacy_policy.pdf" target="_blank" className='link link-active'>политикой конфиденциальности</a></label>
+                <label><input type="checkbox" onChange={handleChangeCheckbox} />&nbsp;Нажимая на кнопку, я даю своё согласие на обработку персональных данных и соглашаюсь
+                    с условиями <a href="/privacy_policy.pdf" target="_blank" className='link link-active'>политикой конфиденциальности</a></label>
                 <button type='submit'>Зарегистрироваться</button>
             </form>
         </div>

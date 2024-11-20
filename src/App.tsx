@@ -33,7 +33,7 @@ function App() {
     };
 
     const [user, setUser] = useState<User>(() => {
-        const loadedUserJson = localStorage.getItem('user');
+        const loadedUserJson = localStorage.getItem('user');    
         if (loadedUserJson) {
             return JSON.parse(loadedUserJson);
         }
@@ -126,11 +126,11 @@ function App() {
             <main>
                 <Routes>
                     <Route path='/' element={<Main />}></Route>
-                    <Route path='/about' element={<About user={user} />}></Route>
+                    <Route path='/about' element={<About user={user} notify={notify} /> } ></Route>
                     <Route path='/catalog' element={<Catalog addToCart={addToCart} notify={notify} />}></Route>
                     <Route path='/contacts' element={<Contacts />}></Route>
-                    <Route path='/auth' element={<Auth setUser={updateUser} />}></Route>
-                    <Route path='/registration' element={<Registration />}></Route>
+                    <Route path='/auth' element={<Auth setUser={updateUser} notify={notify} />}></Route>
+                    <Route path='/registration' element={<Registration setUser={updateUser} notify={notify} />}></Route>
                     <Route path='/item/*' element={<Product item_id={''} addToCart={addToCart} notify={notify} />}></Route>
                     <Route path='/profile' element={<Profile user={user} setUser={setUser} notify={notify} />}></Route>
                     <Route path='/test' element={<Test></Test>}></Route>

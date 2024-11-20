@@ -42,7 +42,7 @@ nav ul {
     flex-direction: row;
     justify-content: space-around;
     list-style: none;
-    font-size: 1.4em;
+    font-size: 20px;
     color: var(--dns-color);
     font-weight: 600;
 }
@@ -137,6 +137,31 @@ iframe {
 
 .nav-show {
     display: none;
+}
+
+.nav-icon {
+    height: 20px;
+    margin-left: 2px;
+}
+
+.loading{
+    width: 36px;
+    height: 36px;
+    margin: auto;
+    border: solid 8px var(--white-color);
+    border-top: solid 8px var(--dns-color);
+    border-radius: 50%;
+    animation: loading 2s infinite linear;
+}
+
+@keyframes loading{
+    0%{
+        transform: rotate(0deg);
+    }
+
+    100%{
+        transform: rotate(360deg);
+    }
 }
 
 footer {
