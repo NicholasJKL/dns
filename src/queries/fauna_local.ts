@@ -97,14 +97,15 @@ const getUserDb = async (params: { user_email: string, user_password: string }):
     const response = await client.query(query);
 
     if (response.data === null) {
-        throw new Error(`Неправильная почта или неправильный пароль`);
+        throw new Error(`Пользователя не существует, либо неправильно указаны почта или пароль.`);
     }
 
     else if (response.data.user_password === params.user_password) {
         return response.data;
     }
-
-    throw new Error(`Ошибка авторизации`);
+    else {
+        throw new Error(`Пользователя не существует, либо неправильно указаны почта или пароль.`);
+    }
 }
 
 const getAllOrdersDb = async (params: { user_id: number | string }): Promise<any> => {
@@ -119,7 +120,7 @@ const createOrderDb = async (order: Order, user: User): Promise<any> => {
         const checkUserQuery = fql`Users.firstWhere(user => user.id == ${order.user_id})`;
         const responseCheckUser = await client.query(checkUserQuery);
 
-        if(!(responseCheckUser.data.user_password === user.user_password)){
+        if (!(responseCheckUser.data.user_password === user.user_password)) {
             throw new Error('Ошибка авторизации');
         }
         console.log(responseCheckUser.data.id)
@@ -194,5 +195,7 @@ const updateUserDb = async (user: User): Promise<any> => {
 
 
 
-export { getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb, 
-    getUserDb, getAllOrdersDb, createOrderDb, createFeedbackDb, updateUserDb };
+export {
+    getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb,
+    getUserDb, getAllOrdersDb, createOrderDb, createFeedbackDb, updateUserDb
+};

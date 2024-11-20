@@ -144,7 +144,7 @@ iframe {
     margin-left: 2px;
 }
 
-.loading{
+.loading {
     width: 36px;
     height: 36px;
     margin: auto;
@@ -154,12 +154,12 @@ iframe {
     animation: loading 2s infinite linear;
 }
 
-@keyframes loading{
-    0%{
+@keyframes loading {
+    0% {
         transform: rotate(0deg);
     }
 
-    100%{
+    100% {
         transform: rotate(360deg);
     }
 }
@@ -227,6 +227,22 @@ footer {
 @media (max-width: 1023px) {
     body {
         width: 90%;
+    }
+
+    p, li, label, input {
+        font-size: 16px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    nav ul li {
+        font-size: 20px;
     }
 
     header {

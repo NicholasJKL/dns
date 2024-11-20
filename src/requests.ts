@@ -1,5 +1,5 @@
 import { getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb, 
-    getUserDb, getAllOrdersDb, createOrderDb, createFeedbackDb, updateUserDb } from './test/db_test'
+    getUserDb, getAllOrdersDb, createOrderDb, createFeedbackDb, updateUserDb } from './queries/fauna_local'
 import User from './models/User';
 import Order from './models/Order';
 import Feedback from './models/Feedback';

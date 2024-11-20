@@ -1,4 +1,4 @@
-import React, { FC, useState, ChangeEvent, FormEvent } from 'react';
+import React, { FC, useState, ChangeEvent, MouseEvent, FormEvent } from 'react';
 import { createUser, getUser } from '../../requests';
 import { useNavigate } from 'react-router-dom';
 
@@ -27,6 +27,7 @@ const Registration: FC<RegistrationProps> = ({ notify, setUser }) => {
     const [userData, setUserData] = useState<User>(initUser);
     const [passwordRepeat, setPasswordRepeat] = useState<string>('');
     const [ppAgreement, setPPAgreement] = useState<boolean>(false);
+    const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
     const navigate = useNavigate();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -78,16 +79,30 @@ const Registration: FC<RegistrationProps> = ({ notify, setUser }) => {
         }
     }
 
+    const handlePasswordVisibilityChange = (e: MouseEvent<HTMLImageElement>) => {
+        setPasswordVisibility(state => !state);
+    }
+
     return (
         <div>
-            <form className='auth-reg-form' onSubmit={handleSubmit}>
+            <form className='auth-reg-form' onSubmit={handleSubmit} autoComplete='off'>
                 <h2>Регистрация</h2>
                 <label>Почта (email)</label>
                 <input name='user_email' type="email" onChange={handleChange} required />
                 <label>Пароль (минимум 8 символов)</label>
-                <input name='user_password' type="password" minLength={8} maxLength={24} required onChange={handleChange} />
+                <div className='input-password'>
+                    <input name='user_password' type={passwordVisibility ? 'text' : 'password'} 
+                    minLength={8} maxLength={24} required onChange={handleChange} />
+                    <img className='password-visibility'
+                     src={passwordVisibility ? '/img/visibility_on.svg' : '/img/visibility_off.svg'} alt="show" onClick={handlePasswordVisibilityChange} />
+                </div>
                 <label>Повторите пароль</label>
-                <input name='password_repeat' type="password" minLength={8} maxLength={24} required onChange={handlePasswordRepeatChange} />
+                <div className='input-password'>
+                    <input  name='password_repeat' type={passwordVisibility ? 'text' : 'password'} 
+                    minLength={8} maxLength={24} required onChange={handlePasswordRepeatChange} />
+                    <img className='password-visibility'
+                     src={passwordVisibility ? '/img/visibility_on.svg' : '/img/visibility_off.svg'} alt="show" onClick={handlePasswordVisibilityChange} />
+                </div>
                 <label><input type="checkbox" onChange={handleChangeCheckbox} />&nbsp;Нажимая на кнопку, я даю своё согласие на обработку персональных данных и соглашаюсь
                     с условиями <a href="/privacy_policy.pdf" target="_blank" className='link link-active'>политикой конфиденциальности</a></label>
                 <button type='submit'>Зарегистрироваться</button>

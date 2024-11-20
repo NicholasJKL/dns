@@ -47,6 +47,7 @@ const Profile: FC<ProfileProps> = ({ user, setUser, notify }) => {
     const handleExit = (e: MouseEvent<HTMLButtonElement>) => {
         let result: boolean = window.confirm('Вы действительно хотите выйти из аккаунта?');
         if (result) {
+            notify('Вы вышли из аккаунта.', 'success');
             setUser({
                 user_id: '',
                 user_email: '',

@@ -70,11 +70,16 @@ const About: FC<AboutProps> = ({ user, notify }) => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        e.currentTarget.reset();
         
-        createFeedback(feedback)
-            .then(() => notify('Сообщение отправлено.','success'))
-            .catch(() => notify('Ошибка при отправке отзыва. Попробуйте отправить отзыв позже.','error'));
+        if (user.user_id) {
+            e.currentTarget.reset();
+            createFeedback(feedback)
+                .then(() => notify('Сообщение отправлено.', 'success'))
+                .catch(() => notify('Ошибка при отправке отзыва. Попробуйте отправить отзыв позже.', 'error'));
+        }
+        else{
+            notify('Для использований обратной связи необходимо войти в аккаунт.','error');
+        }
     }
 
     return (
@@ -110,8 +115,8 @@ const About: FC<AboutProps> = ({ user, notify }) => {
             <form className='about-feedback' action='submit' onSubmit={handleSubmit}>
                 <h2>Обратная связь</h2>
                 <label>Имя</label>
-                <input name='user_name' maxLength={32} type="text" onChange={handleChangeInput} 
-                defaultValue={user.user_name} required />
+                <input name='user_name' maxLength={32} type="text" onChange={handleChangeInput}
+                    defaultValue={user.user_name} required />
                 <label>Почта</label>
                 <input name='user_email' type="email" onChange={handleChangeInput} defaultValue={user.user_email} />
                 <label>Телефон</label>
