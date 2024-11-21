@@ -1,5 +1,6 @@
 import { getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb, 
-    getUserDb, getAllOrdersDb, createOrderDb, createFeedbackDb, updateUserDb } from './queries/fauna_local'
+    getUserDb, getAllOrdersDb, createOrderDb, createFeedbackDb, updateUserDb, 
+    getAllBrandsDb} from './queries/fauna_local'
 import User from './models/User';
 import Order from './models/Order';
 import Feedback from './models/Feedback';
@@ -141,7 +142,18 @@ const updateUser = async (user: User) => {
     }
 }
 
+const getAllBrands = async () => {
+    try {
+        const queryObject = await getAllBrandsDb();
+        return queryObject;
+    }
+    catch(error) {
+        console.error(`Failed to get brands`);
+        throw error;
+    }
+}
+
 
 
 export { getAllItems, getItemById, getSearchingItems, createUser, getUser, getAllOrders,
-     createOrder, createFeedback, updateUser };
+     createOrder, createFeedback, updateUser, getAllBrands };

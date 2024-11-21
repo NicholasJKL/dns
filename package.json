@@ -13,6 +13,7 @@
     "aws-lambda": "^1.0.7",
     "fauna": "^2.2.0",
     "faunadb": "^4.8.1",
+    "pure-react-carousel": "^1.32.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.27.0",

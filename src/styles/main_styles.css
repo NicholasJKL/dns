@@ -7,11 +7,20 @@
 }
 
 .main-content-grid {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     margin-top: 4%;
+}
+
+.carousel__inner-slide {
+    display: flex;
     justify-content: center;
-    align-items: center;
-    grid-template-columns: 1fr 1fr;
+}
+
+.brands-block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .main-content-text {
@@ -20,17 +29,58 @@
     margin-bottom: 24px;
 }
 
-.main-brand-grid {
-    display: grid;
-    margin-bottom: 24px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    align-items: center;
+.carousel-block {
+    display: flex;
+    flex-direction: row;
     justify-content: center;
-    font-size: 1.66em;
+    align-items: center;
+    height: 136px;
+    margin-bottom: 64px;
+    gap: 4px;
 }
 
-.main-brand-grid a{
+.carousel-slider {
+    flex-grow: 1;
+    height: 136px;
+}
+
+.carousel-slider a {
+    display: block;
     width: fit-content;
+}
+
+.carousel-button-back,
+.carousel-button-next {
+    background-color: var(--white-color);
+    background-size: 36px;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 48px;
+    height: 48px;
+    transition: background-image 0.4s;
+}
+
+.carousel-button-back {
+    background-image: url('/public/img/arrow_left.png');
+}
+
+.carousel-button-back:hover,
+.carousel-button-next:hover {
+    background-color: var(--white-color);
+    transition: background-image 0.4s;
+}
+
+.carousel-button-back:hover {
+    background-image: url('/public/img/arrow_left_dns.png');
+}
+
+.carousel-button-next:hover {
+    background-image: url('/public/img/arrow_right_dns.png');
+}
+
+
+.carousel-button-next {
+    background-image: url('/public/img/arrow_right.png');
 }
 
 .main-brand-element {
@@ -38,7 +88,6 @@
     align-items: center;
     width: 120px;
     height: 60px;
-    margin: 0 4px 16px 4px;
     padding: 4px;
     background-color: var(--white-color);
     border-radius: 12px;
@@ -50,8 +99,8 @@
 }
 
 .main-go-purchasing {
-    margin-top: 3%;
     text-align: center;
+    margin-bottom: 32px;
 }
 
 .main-go-purchasing button {
@@ -71,17 +120,40 @@
         gap: 12px;
     }
 
-    .main-brand-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 12px 48px;
-    }
-
     .main-content h1 {
-        font-size: 36px;
-    }
-
-    .main-content p {
         font-size: 28px;
     }
 
+    .main-content p {
+        font-size: 20px;
+    }
+
+    .main-go-purchasing button {
+        font-size: 20px;
+    }
+
+}
+
+@media (max-width:769px) {
+
+    .carousel-button-back,
+    .carousel-button-next {
+        opacity: 0%;
+        position: absolute;
+        transition: opacity 0.4s;
+    }
+
+    .carousel-button-back {
+        left: 0;
+    }
+
+    .carousel-button-next {
+        right: 0;
+    }
+
+    .carousel-block:hover .carousel-button-back,
+    .carousel-block:hover .carousel-button-next {
+        opacity: 66%;
+        transition: opacity 0.4s;
+    }
 }

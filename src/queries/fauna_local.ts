@@ -3,6 +3,7 @@ import { Client, fql, FaunaError } from "fauna";
 import User from "../models/User";
 import Order from "../models/Order";
 import Feedback from "../models/Feedback";
+import Brand from "../models/Brand";
 
 class UserExistError extends Error {
     constructor(message: string) {
@@ -115,6 +116,13 @@ const getAllOrdersDb = async (params: { user_id: number | string }): Promise<any
     return response.data;
 }
 
+const getAllBrandsDb = async (): Promise<any> => {
+    const query = fql`
+        Brands.all().pageSize(36)`;
+    const response = await client.query(query);
+    return response.data;
+}
+
 const createOrderDb = async (order: Order, user: User): Promise<any> => {
     try {
         const checkUserQuery = fql`Users.firstWhere(user => user.id == ${order.user_id})`;
@@ -197,5 +205,5 @@ const updateUserDb = async (user: User): Promise<any> => {
 
 export {
     getAllItemsDb, getItemByIdDb, getSearchingItemsDb, createUserDb,
-    getUserDb, getAllOrdersDb, createOrderDb, createFeedbackDb, updateUserDb
+    getUserDb, getAllOrdersDb, createOrderDb, createFeedbackDb, updateUserDb, getAllBrandsDb
 };
