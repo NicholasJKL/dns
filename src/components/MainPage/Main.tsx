@@ -82,12 +82,11 @@ const Main: FC = () => {
                                     naturalSlideHeight={136}
                                     totalSlides={Math.ceil(brands.length / 2)}
                                     isPlaying={true}
-                                    interval={1750}
+                                    interval={2000}
                                     visibleSlides={showSlides}
                                     orientation='horizontal'
                                     infinite={true}>
                                     <div className='carousel-block'>
-                                        <ButtonBack className='carousel-button-back'> </ButtonBack>
                                         <div className='carousel-slider'>
                                             <Slider>
                                                 {
@@ -107,6 +106,7 @@ const Main: FC = () => {
                                                 }
                                             </Slider>
                                         </div>
+                                        <ButtonBack className='carousel-button-back'> </ButtonBack>
                                         <ButtonNext className='carousel-button-next'> </ButtonNext>
                                     </div>
                                 </CarouselProvider>
@@ -117,6 +117,7 @@ const Main: FC = () => {
                 </div>
                 <div className='main-go-purchasing'>
                     <button onClick={handleClick}>Перейти к каталогу товаров</button>
+                    <img src="/img/dns_shop_img.webp" alt="" />
                 </div>
             </div>
         </div>

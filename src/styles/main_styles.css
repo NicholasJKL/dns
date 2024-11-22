@@ -31,6 +31,7 @@
 
 .carousel-block {
     display: flex;
+    position: relative;
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -99,13 +100,24 @@
 }
 
 .main-go-purchasing {
-    text-align: center;
-    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
 }
 
 .main-go-purchasing button {
     font-size: 1.8em;
     background-color: var(--white-color);
+}
+
+.main-go-purchasing img {
+    max-width: 720px;
+    width: 96%;
+    min-width: 240px;
+    border-radius: 8px;
+
 }
 
 .main-go-purchasing button:hover {
@@ -134,26 +146,32 @@
 
 }
 
+.carousel-button-back,
+.carousel-button-next {
+    opacity: 0%;
+    position: absolute;
+    transition: opacity 0.4s;
+}
+
+.carousel-block:hover .carousel-button-back,
+.carousel-block:hover .carousel-button-next {
+    opacity: 80%;
+    transition: opacity 0.4s;
+}
+
+.carousel-button-back {
+    left: 0;
+}
+
+.carousel-button-next {
+    right: 0;
+}
+
+
 @media (max-width:769px) {
 
-    .carousel-button-back,
-    .carousel-button-next {
-        opacity: 0%;
-        position: absolute;
-        transition: opacity 0.4s;
-    }
 
-    .carousel-button-back {
-        left: 0;
-    }
 
-    .carousel-button-next {
-        right: 0;
-    }
+    
 
-    .carousel-block:hover .carousel-button-back,
-    .carousel-block:hover .carousel-button-next {
-        opacity: 66%;
-        transition: opacity 0.4s;
-    }
 }
