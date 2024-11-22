@@ -115,6 +115,26 @@ iframe {
     border-radius: 8px;
 }
 
+li {
+    position: relative;
+}
+
+.cart-amount {
+    position: absolute;
+    display: flex;
+    width: 18px;
+    height: 18px;
+    font-size: 14px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    padding: 2px;
+    top: -12px;
+    left: 94%;
+    background-color: var(--dns-color);
+    color: var(--industrial-color)
+}
+
 .mobile-menu {
     display: none;
     position: absolute;

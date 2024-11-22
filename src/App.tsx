@@ -129,7 +129,7 @@ function App() {
 
     return (
         <div>
-            <Header user={user}></Header>
+            <Header user={user} cartAmount={cart.length}></Header>
             <main>
                 <Routes>
                     <Route path='/' element={<Main />}></Route>

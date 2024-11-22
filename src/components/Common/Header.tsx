@@ -7,10 +7,11 @@ import '../../styles/common_styles.css';
 
 
 interface HeaderProps {
-  user: User
+  user: User,
+  cartAmount: number
 }
 
-const Header: FC<HeaderProps> = ({ user }) => {
+const Header: FC<HeaderProps> = ({ user, cartAmount }) => {
 
   const [isActive, setIsActive] = useState<boolean>(false);
 
@@ -46,7 +47,13 @@ const Header: FC<HeaderProps> = ({ user }) => {
             <>
               <NavLink to='/profile' className={({ isActive }) => isActive ? 'link link-active' : 'link'} onClick={handleLinkClick}><li>Профиль</li></NavLink>
               <NavLink to='/cart' className={({ isActive }) => isActive ? 'link link-active' : 'link'} onClick={handleLinkClick}>
-                <li>Корзина</li>
+                <li>Корзина
+                  {cartAmount > 0 &&
+                    <div className='cart-amount'>
+                      {cartAmount}
+                    </div>
+                  }
+                </li>
               </NavLink>
             </>
           }
