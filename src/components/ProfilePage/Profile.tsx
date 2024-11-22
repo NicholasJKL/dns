@@ -1,11 +1,12 @@
 import React, { FC, useState, MouseEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { getAllOrders, getItemById, updateUser } from '../../requests';
+
+import Item from '../../models/Item';
+import ItemDb from '../../models/ItemDb';
 import User from '../../models/User';
 import Order from '../../models/Order';
-
-import { getAllOrders, getItemById, updateUser } from '../../requests';
-import ItemDb from '../../models/ItemDb';
 
 import '../../styles/common_styles.css';
 import '../../styles/profile_styles.css';
@@ -14,10 +15,11 @@ import '../../styles/profile_styles.css';
 interface ProfileProps {
     user: User,
     setUser: (user: User) => void,
-    notify: (message: string, type: string) => void
+    notify: (message: string, type: string) => void,
+    setCart: (items: Item[]) => void
 }
 
-const Profile: FC<ProfileProps> = ({ user, setUser, notify }) => {
+const Profile: FC<ProfileProps> = ({ user, setUser, notify, setCart }) => {
     const navigate = useNavigate();
 
     const [orders, setOrders] = useState<Order[]>([]);
@@ -56,6 +58,7 @@ const Profile: FC<ProfileProps> = ({ user, setUser, notify }) => {
                 user_phone: '',
                 user_address: ''
             });
+            setCart([]);
             navigate('/');
         }
     }
@@ -81,7 +84,7 @@ const Profile: FC<ProfileProps> = ({ user, setUser, notify }) => {
                     [name]: value
                 });
             }
-            else{
+            else {
                 notify('Данные не обновлены. Некорректно введён номер телефона', 'error');
             }
         }
@@ -94,7 +97,7 @@ const Profile: FC<ProfileProps> = ({ user, setUser, notify }) => {
                 <p>Почта: {user.user_email}</p>
                 <p>Имя: {user.user_name} <button name='user_name' className='change-button' onClick={changeUserData}>Изменить</button></p>
                 <p>Телефон: {user.user_phone ? user.user_phone : '+7(XXX)-XXX-XX-XX'}
-                 <button name='user_phone' className='change-button' onClick={changeUserData}>Изменить</button></p>
+                    <button name='user_phone' className='change-button' onClick={changeUserData}>Изменить</button></p>
                 <p>Адрес: {user.user_address} <button name='user_address' className='change-button' onClick={changeUserData}>Изменить</button></p>
                 <button onClick={handleExit}>Выйти из аккаунта</button>
             </div>
@@ -102,30 +105,30 @@ const Profile: FC<ProfileProps> = ({ user, setUser, notify }) => {
                 <h1>История заказов</h1>
                 {
                     isLoading ? <div className='loading'></div> :
-                    orders.map(order => {
-                        return (
-                            <details key={order.id} className='profile-order'>
-                                <summary><b>Заказ от {order.order_created_at.toString()},
-                                    Сумма: {order.order_price} ₽, Статус: {order.order_status}</b></summary>
-                                <ol>
-                                    {
-                                        order.items_id.map((ref, index) => {
-                                            const item: ItemDb | undefined = items.find(item => item.id === ref.id);
-                                            if (item !== undefined) {
-                                                const { item_name, item_price } = item;
-                                                const amount = order.items_amount.get(item.id);
-                                                if (amount !== undefined) {
-                                                    return (<li key={index}>{item_name}
-                                                        : {item_price} ₽ * {amount} = {item_price * amount} ₽</li>);
+                        orders.map(order => {
+                            return (
+                                <details key={order.id} className='profile-order'>
+                                    <summary><b>Заказ от {order.order_created_at.toString()},
+                                        Сумма: {order.order_price} ₽, Статус: {order.order_status}</b></summary>
+                                    <ol>
+                                        {
+                                            order.items_id.map((ref, index) => {
+                                                const item: ItemDb | undefined = items.find(item => item.id === ref.id);
+                                                if (item !== undefined) {
+                                                    const { item_name, item_price } = item;
+                                                    const amount = order.items_amount.get(item.id);
+                                                    if (amount !== undefined) {
+                                                        return (<li key={index}>{item_name}
+                                                            : {item_price} ₽ * {amount} = {item_price * amount} ₽</li>);
+                                                    }
                                                 }
-                                            }
-                                            return <li key={index}>Загрузка...</li>;
-                                        })
-                                    }
-                                </ol>
-                            </details>
-                        )
-                    })
+                                                return <li key={index}>Загрузка...</li>;
+                                            })
+                                        }
+                                    </ol>
+                                </details>
+                            )
+                        })
 
                 }
 

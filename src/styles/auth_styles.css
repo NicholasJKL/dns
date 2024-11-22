@@ -39,6 +39,7 @@
 
 .input-password {
     display: flex;
+    position: relative;
     flex-direction: row;
     align-items: center;
     height: fit-content;
@@ -53,7 +54,8 @@
 }
 
 .password-visibility {
-    justify-self: flex-end;
+    position: absolute;
+    right: 2px;
     margin-right: 4px;
 }
 

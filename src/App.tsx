@@ -66,7 +66,7 @@ function App() {
                 newItem.item_cart_amount = amount;
                 setCart([...cart, newItem]);
             }
-            notify('Товар добавлен в корзину.','success');
+            notify('Товар добавлен в корзину.', 'success');
         }
         else {
             notify('Необходимо войти в аккаунт, прежде чем добавлять товары в корзину.', 'error');
@@ -139,7 +139,7 @@ function App() {
                     <Route path='/auth' element={<Auth setUser={updateUser} notify={notify} />}></Route>
                     <Route path='/registration' element={<Registration setUser={updateUser} notify={notify} />}></Route>
                     <Route path='/item/*' element={<Product item_id={''} addToCart={addToCart} notify={notify} />}></Route>
-                    <Route path='/profile' element={<Profile user={user} setUser={setUser} notify={notify} />}></Route>
+                    <Route path='/profile' element={<Profile user={user} setUser={setUser} setCart={setCart} notify={notify} />}></Route>
                     <Route path='/test' element={<Test></Test>}></Route>
                     <Route path='/cart' element={<Cart user={user} cart={cart} setCart={setCart} deleteFromCart={deleteFromCart} updateItemAmount={updateItemAmount} notify={notify} />}></Route>
                 </Routes>
